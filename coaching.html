@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Meevo Sales Enablement Coaching</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#dde2e8;color:#2d3a45;min-height:100vh}
+.hdr{background:#fff;border-bottom:1px solid #c5ced6;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.hdr-left{display:flex;align-items:center;gap:14px}
+.hdr h1{font-size:17px;font-weight:600;color:#1a6b54}.hdr p{font-size:11px;color:#6b7a88}
+.back{font-size:12px;color:#1a6b54;text-decoration:none;font-weight:600}
+.back:hover{text-decoration:underline}
+.srch{padding:8px 14px;border-radius:10px;border:1px solid #c5ced6;font-size:12px;width:280px;background:#eef2f6;color:#2d3a45;outline:none;font-family:inherit}
+.srch:focus{border-color:#1a6b54}
+.tabs{background:#fff;border-bottom:1px solid #c5ced6;display:flex;overflow-x:auto;position:sticky;top:0;z-index:10}
+.tb{padding:12px 18px;font-size:12px;font-weight:500;color:#6b7a88;background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap;font-family:inherit}
+.tb:hover{color:#1a6b54}.tb.a{font-weight:600;color:#1a6b54;border-bottom-color:#1a6b54}
+.mn{padding:20px 24px;max-width:1060px;margin:0 auto}
+.cards{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.cd{background:#fff;border-radius:14px;padding:16px 18px;border:1px solid #c5ced6;flex:1;min-width:140}
+.cd-l{font-size:10px;color:#6b7a88;font-weight:600;text-transform:uppercase;letter-spacing:.7px}
+.cd-v{font-size:26px;font-weight:700;margin-top:4px}
+.cd-s{font-size:11px;color:#8494a2;margin-top:2px}
+.stl{font-size:16px;font-weight:600;color:#1e2b35;margin-bottom:6px}
+.ssb{font-size:12px;color:#6b7a88;margin-bottom:16px}
+.tw{overflow-x:auto;background:#fff;border-radius:14px;border:1px solid #c5ced6}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:#edf1f5;border-bottom:2px solid #c5ced6}
+th{text-align:left;padding:10px 10px;color:#6b7a88;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;cursor:pointer;user-select:none}
+td{padding:10px 10px;border-bottom:1px solid #edf1f5}
+tbody tr:hover{background:#f4f7fa}
+.av{border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
+.nc{display:flex;align-items:center;gap:10px}
+.bdg{padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;color:#fff}
+.rc{background:#fff;border-radius:14px;padding:18px;margin-bottom:12px;border:1px solid #c5ced6}
+.tg{padding:4px 12px;border-radius:14px;font-size:11px;font-weight:600;color:#fff}
+.tg-g{background:#1a6b54}.tg-y{background:#8a6d1b}
+.fb{padding:6px 14px;border-radius:18px;font-size:11px;border:none;cursor:pointer;font-family:inherit;font-weight:500}
+.fb.a{background:#1a6b54;color:#fff;font-weight:600}
+.fb:not(.a){background:#e4e9ee;color:#4a5968}
+.cc{background:#fff;border-radius:12px;padding:14px 18px;margin-bottom:10px;border:1px solid #c5ced6;cursor:pointer}
+.cc:hover{box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.bb{background:#e4e9ee;border-radius:6px;height:6px;width:100%;overflow:hidden;margin-top:6px}
+.bf{height:100%;border-radius:6px}
+.det{margin-top:10px;padding:12px 14px;border-radius:10px;font-size:12px;display:none;line-height:1.6}
+.det.op{display:block}
+.gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:14px}
+.gc{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #c5ced6}
+.tr{background:#fff;border-radius:12px;padding:14px 18px;margin-bottom:10px;border:1px solid #c5ced6;display:flex;align-items:center;gap:14px}
+.tr.w{border-color:#e8a0a0}
+.tg2{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:12px}
+.tm{background:#fff;border-radius:10px;padding:10px 14px;border:1px solid #c5ced6;display:flex;align-items:center;gap:10px}
+.tc{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:12px;border:1px solid #c5ced6}
+.spark{flex-shrink:0}
+.mo{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.mc{flex:1;min-width:120;background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #c5ced6}
+.bt{padding:6px 14px;border-radius:8px;font-size:11px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
+.bg{background:#1a6b54;color:#fff}.br{background:#b83b3b;color:#fff}.bo{background:#edf1f5;color:#4a5968}.bb2{background:#2563a8;color:#fff}
+.bs{padding:4px 8px;font-size:10px}
+.mbg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:center;justify-content:center}
+.mdl{background:#fff;border-radius:16px;padding:24px;width:90%;max-width:620px;max-height:90vh;overflow-y:auto}
+.mdl h2{font-size:16px;font-weight:600;color:#1a6b54;margin-bottom:16px}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:11px;font-weight:600;color:#6b7a88;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+.fg input,.fg select,.fg textarea{width:100%;padding:8px 12px;border:1px solid #c5ced6;border-radius:8px;font-size:12px;font-family:inherit;color:#2d3a45}
+.fg textarea{min-height:70px;resize:vertical}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:#1a6b54}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.cen{background:#f8fafb;border-radius:10px;padding:14px 16px;margin-bottom:10px;border-left:4px solid #1a6b54}
+.cen.pri{border-left-color:#c4880d}.cen.urg{border-left-color:#b83b3b}
+.stb{padding:5px 12px;border-radius:16px;font-size:11px;border:none;cursor:pointer;font-family:inherit;font-weight:500}
+.stb.a{background:#1a6b54;color:#fff;font-weight:600}
+.stb:not(.a){background:#e4e9ee;color:#4a5968}
+.ft{text-align:center;padding:24px;color:#8494a2;font-size:11px}
+.emp{text-align:center;padding:40px;color:#8494a2;font-size:13px}
+::-webkit-scrollbar{height:6px;width:6px}::-webkit-scrollbar-track{background:#e4e9ee;border-radius:3px}::-webkit-scrollbar-thumb{background:#b0bcc6;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="hdr">
+<div class="hdr-left">
+<svg width="110" height="34" viewBox="0 0 110 34"><rect width="110" height="34" rx="6" fill="#1a6b54"/><text x="55" y="22" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="15" font-weight="700" fill="#fff" letter-spacing="2">MEEVO</text></svg>
+<div><div style="display:flex;align-items:center;gap:10px"><h1>Sales Enablement Coaching</h1></div><p>Q1 2026 · 24 Reps · 9 Frameworks · 1:1 Coaching Log</p></div>
+</div>
+<input class="srch" id="search" placeholder="Search any rep by name..." autocomplete="off"/>
+</div>
+<div class="tabs" id="tabs"></div>
+<div class="mn" id="main"></div>
+<div class="ft">Meevo Sales Enablement Coaching · Q1 2026</div>
+<div id="mw" style="display:none"></div>
+<script>
+var R=[
+{id:1,n:"Sandra Arnette",r:"AE",mg:"Taylor Meeker",total:872,exc:51,good:212,nw:299,avg:2.49,gaps:["Discovery - Implications (1.10)","Discovery - Why Top Priority (1.17)","Intro Call - Why Top Priority (1.00)"],trend:[2.50,2.66,2.39,2.50],tl:"Recovering",opps:167,calls:354,themes:["GK navigation (562)","Discovery gaps (30)","Demo execution (76)"],actions:["Discovery fundamentals","GK info gleaning"],obj:{tier:"T2",score:3.29,type:"Cold Call + AE Demo (3.09)"},price:{score:2.25,tier:"mid"},vol:{total:1172,mo:[370,252,514,36],eff:"Volume hurting quality"}},
+{id:2,n:"Africa Brown",r:"SDR",mg:"Avery Baccala",total:829,exc:89,good:175,nw:269,avg:2.50,gaps:["Intro Call - Implications","Intro Call - Why Top Priority","GK Navigation"],trend:[2.44,2.74,2.59,2.68],tl:"Recovering",opps:135,calls:202,themes:["Cold calling consistency","Intro call effectiveness"],actions:["Reduce variability","Improve intro framework"],obj:{tier:"T3",score:2.77,type:"Cold Call"},price:{score:null,tier:null},vol:{total:946,mo:[290,296,318,42],eff:"Consistent volume, quality issue"}},
+{id:3,n:"Kaelyne Chavez",r:"SDR",mg:"Avery Baccala",total:685,exc:76,good:139,nw:181,avg:2.68,gaps:["GK Intel Gathering","Intro Call Structure","Consistency"],trend:[null,2.65,2.70,2.68],tl:"Stable",opps:109,calls:136,themes:["GK navigation","Intro calls"],actions:["GK intel gathering","Intro call structure"],obj:{tier:"T2",score:3.06,type:"Cold Call"},price:{score:null,tier:null},vol:{total:774,mo:[307,185,255,27],eff:"Steady activity"}},
+{id:4,n:"Amber Martello",r:"SDR",mg:"Avery Baccala",total:607,exc:99,good:138,nw:111,avg:2.51,gaps:["GK - Info Gleaning","GK - Connecting","Consistency"],trend:[null,2.48,2.53,2.51],tl:"Improving",opps:150,calls:193,themes:["Cold call execution"],actions:["Consistency improvement"],obj:{tier:"T2",score:3.45,type:"Cold Call"},price:{score:null,tier:null},vol:{total:698,mo:[258,164,247,29],eff:"2.51 avg"}},
+{id:5,n:"Chloe Arnette",r:"SDR",mg:"Avery Baccala",total:535,exc:47,good:119,nw:154,avg:2.66,gaps:["GK Navigation","Intro Call Framework","GK Connection"],trend:[2.38,2.92,2.99,2.94],tl:"Strong ↑",opps:117,calls:137,themes:["GK navigation","Intro calls"],actions:["Intro call framework","GK connection"],obj:{tier:"T2",score:3.21,type:"Cold Call"},price:{score:null,tier:null},vol:{total:798,mo:[208,282,282,26],eff:"Better quality than top volume"}},
+{id:6,n:"Myranda Grabman",r:"AE",mg:"Melanie Hull",total:470,exc:99,good:138,nw:111,avg:2.89,gaps:["Limited data","Limited data","Limited data"],trend:[null,2.88,2.89,2.89],tl:"Rock Solid",opps:96,calls:149,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T1",score:3.60,type:"Cold Call"},price:{score:2.57,tier:"mid"},vol:{total:726,mo:[0,350,359,17],eff:"HIGH QUALITY + HIGH VOLUME"}},
+{id:7,n:"Matt McCarthy",r:"AE",mg:"Taylor Meeker",total:414,exc:93,good:99,nw:111,avg:2.84,gaps:["Limited data","Limited data","Limited data"],trend:[null,2.80,2.86,2.84],tl:"Stable",opps:117,calls:165,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T1",score:3.71,type:"Cold Call - Owner/Manager"},price:{score:2.42,tier:"mid"},vol:{total:548,mo:[145,215,182,6],eff:"Good balance"}},
+{id:8,n:"Jenna Flory",r:"AE",mg:"Nicole Fabre",total:385,exc:58,good:90,nw:123,avg:2.58,gaps:["Cold Call Execution","Discovery Depth","Consistency"],trend:[null,2.55,2.60,2.58],tl:"Stable",opps:121,calls:162,themes:["Cold call execution","Discovery depth"],actions:["Discovery coaching"],obj:{tier:"T1",score:3.65,type:"AE Demo + Cold Call (3.55)"},price:{score:2.91,tier:"top"},vol:{total:505,mo:[142,144,207,12],eff:"2.58 avg"}},
+{id:9,n:"Tyler Butt",r:"SDR",mg:"Avery Baccala",total:382,exc:23,good:101,nw:158,avg:2.58,gaps:["Call Quality","Volume vs Quality","GK Navigation"],trend:[null,2.54,2.60,2.58],tl:"Stable",opps:112,calls:135,themes:["Call quality","Volume balance"],actions:["Quality focus","GK navigation"],obj:{tier:"T2",score:3.00,type:"Cold Call"},price:{score:null,tier:null},vol:{total:889,mo:[1,426,416,46],eff:"Ramped Feb"}},
+{id:10,n:"William Appleford",r:"SDR",mg:"Avery Baccala",total:378,exc:33,good:93,nw:120,avg:2.63,gaps:["GK Navigation","Cold Call Consistency","Discovery"],trend:[2.46,2.58,2.58,null],tl:"Improving",opps:73,calls:83,themes:["GK navigation"],actions:["Continue GK coaching"],obj:{tier:"T2",score:3.06,type:"Cold Call"},price:{score:null,tier:null},vol:{total:440,mo:[null,null,null,null],eff:"Mid-tier"}},
+{id:11,n:"Michael Senich",r:"SDR",mg:"Avery Baccala",total:303,exc:0,good:0,nw:0,avg:2.70,gaps:["Limited data","Limited data","Limited data"],trend:[null,2.68,2.71,2.70],tl:"Stable",opps:117,calls:183,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T2",score:3.07,type:"Cold Call"},price:{score:null,tier:null},vol:{total:388,mo:[null,null,null,null],eff:"Started Mar"}},
+{id:12,n:"Monica Lopez",r:"AE",mg:"Nicole Fabre",total:292,exc:0,good:0,nw:0,avg:2.57,gaps:["Limited data","Limited data","Limited data"],trend:[null,2.55,2.58,2.57],tl:"Stable",opps:83,calls:115,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T1",score:3.63,type:"AE Demo"},price:{score:2.80,tier:"top"},vol:{total:391,mo:[null,null,null,null],eff:"Mid-tier"}},
+{id:13,n:"Candice Chuy",r:"AE",mg:"Nicole Fabre",total:288,exc:45,good:28,nw:39,avg:2.71,gaps:["Limited data","Limited data","Limited data"],trend:[null,2.68,2.73,2.71],tl:"Stable",opps:103,calls:158,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T1",score:3.71,type:"Cold Call + AE Demo (3.64)"},price:{score:2.76,tier:"top"},vol:{total:348,mo:[null,null,null,null],eff:"Mid-tier"}},
+{id:14,n:"Brandon Cline",r:"AE",mg:"Melanie Hull",total:231,exc:38,good:28,nw:47,avg:2.73,gaps:["Limited data","Limited data","Limited data"],trend:[null,2.75,2.89,null],tl:"Improving",opps:54,calls:69,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T2",score:3.43,type:"AE Demo + Cold Call (3.24)"},price:{score:2.52,tier:"mid"},vol:{total:416,mo:[null,null,null,null],eff:"Mid-tier"}},
+{id:15,n:"Denise LaRocca",r:"SE",mg:"",total:182,exc:0,good:0,nw:0,avg:2.79,gaps:["Limited data","Limited data","Limited data"],trend:[null,null,2.79,2.79],tl:"New",opps:136,calls:161,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T1",score:3.74,type:"SE Demo - Technical Objections"},price:{score:null,tier:null},vol:{total:199,mo:[null,null,null,null],eff:""}},
+{id:16,n:"Tony Sansone",r:"SE",mg:"",total:161,exc:0,good:0,nw:0,avg:2.78,gaps:["Limited data","Limited data","Limited data"],trend:[null,null,2.78,2.78],tl:"New",opps:124,calls:151,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T1",score:3.69,type:"SE Demo - Technical Objections"},price:{score:null,tier:null},vol:{total:181,mo:[null,null,null,null],eff:""}},
+{id:17,n:"Sky Guasco",r:"SDR",mg:"Avery Baccala",total:116,exc:18,good:37,nw:29,avg:2.80,gaps:["Limited data","Limited data","Limited data"],trend:[null,null,2.78,2.80],tl:"New",opps:40,calls:47,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T2",score:3.37,type:"Cold Call"},price:{score:null,tier:null},vol:{total:323,mo:[null,null,null,null],eff:"Started Mar"}},
+{id:18,n:"Lauren Hopkins",r:"AE",mg:"Melanie Hull",total:94,exc:18,good:20,nw:21,avg:2.97,gaps:["Limited data","Limited data","Limited data"],trend:[null,null,2.85,2.97],tl:"Strong ↑",opps:62,calls:69,themes:["Strong performer"],actions:["Peer coaching candidate"],obj:{tier:"T2",score:3.43,type:"Cold Call"},price:{score:1.80,tier:"critical"},vol:{total:119,mo:[null,null,105,14],eff:"New rep, good start"}},
+{id:19,n:"Jeremy Sexton",r:"SDR",mg:"Avery Baccala",total:34,exc:0,good:0,nw:0,avg:2.59,gaps:["Limited data","Limited data","Limited data"],trend:[null,null,null,2.59],tl:"New",opps:11,calls:12,themes:["General coaching"],actions:["Continue coaching"],obj:{tier:"T3",score:2.75,type:"Cold Call (limited)"},price:{score:null,tier:null},vol:{total:48,mo:[null,null,null,null],eff:"Started Mar"}},
+{id:20,n:"Patrick McCaghren",r:"AE",mg:"Taylor Meeker",total:7,exc:0,good:0,nw:0,avg:2.37,gaps:["Limited data","Limited data","Limited data"],trend:[null,null,null,2.37],tl:"New",opps:3,calls:5,themes:["Limited calls"],actions:["Increase volume"],obj:{tier:"T2",score:3.00,type:"AE Demo (limited)"},price:{score:1.00,tier:"critical"},vol:{total:441,mo:[29,155,242,15],eff:"Strong ramp, quality needs work"}},
+{id:21,n:"Carson Hussey",r:"SDR",mg:"Avery Baccala",total:0,exc:0,good:0,nw:0,avg:0,gaps:["New hire","New hire","New hire"],trend:[null,null,null,null],tl:"New",opps:0,calls:0,themes:["New hire"],actions:["Onboarding"],obj:{tier:"—",score:0,type:"New hire"},price:{score:null,tier:null},vol:{total:0,mo:[null,null,null,null],eff:"New hire"}},
+{id:22,n:"Jessica Monson",r:"AE",mg:"Melanie Hull",total:0,exc:0,good:0,nw:0,avg:0,gaps:["New hire","New hire","New hire"],trend:[null,null,null,null],tl:"New",opps:0,calls:0,themes:["New hire"],actions:["Onboarding"],obj:{tier:"—",score:0,type:"New hire"},price:{score:null,tier:null},vol:{total:0,mo:[null,null,null,null],eff:"New hire"}},
+{id:23,n:"Suzy Kim",r:"SDR",mg:"Melanie Hull",total:0,exc:0,good:0,nw:0,avg:0,gaps:["New hire","New hire","New hire"],trend:[null,null,null,null],tl:"New",opps:0,calls:0,themes:["New hire"],actions:["Onboarding"],obj:{tier:"—",score:0,type:"New hire"},price:{score:null,tier:null},vol:{total:0,mo:[null,null,null,null],eff:"New hire"}},
+{id:24,n:"Kenny Sullivan",r:"AE",mg:"Melanie Hull",total:0,exc:0,good:0,nw:0,avg:0,gaps:["New hire","New hire","New hire"],trend:[null,null,null,null],tl:"New",opps:0,calls:0,themes:["New hire"],actions:["Onboarding"],obj:{tier:"—",score:0,type:"New hire"},price:{score:null,tier:null},vol:{total:0,mo:[null,null,null,null],eff:"New hire"}}
+];
+
+var COMPS=[{n:"Discovery - Implications",a:1.10,t:"gap",d:"Sandra: 27/30 below 2.0."},{n:"Discovery - Why Top Priority",a:1.17,t:"gap",d:"Sandra: 25/30 below 2.0."},{n:"Intro Call - Implications",a:1.33,t:"gap",d:"Multiple reps struggling."},{n:"AE Demo - Open-ended Qs",a:1.63,t:"gap",d:"Sandra: 28/76 below 2.0."},{n:"AE Demo - Clarifying Qs",a:1.67,t:"gap",d:"Sandra: 25/76 below 2.0."},{n:"AE Demo - Features vs Value",a:1.81,t:"gap",d:"Sandra: 18/68 below 2.0."},{n:"Cold Call - GK Info Gleaning",a:1.99,t:"gap",d:"Sandra: 247/562 below 2.0."},{n:"Intro Call - Next Steps",a:4.67,t:"str",d:"Sandra: 3/3 at 4+."},{n:"AE Demo - Next Steps",a:3.68,t:"str",d:"Multiple reps strong."},{n:"CC - Owner Intro/Hook",a:3.30,t:"str",d:"Lauren, Matt, Brandon lead."},{n:"CC - Owner Objection Nav",a:3.29,t:"str",d:"Chloe, William lead."},{n:"Professional Rapport",a:3.26,t:"str",d:"Chloe: 201/312 at 4+."}];
+var MO_DATA=[{m:"January",a:2.54,s:38,w:27},{m:"February",a:2.68,s:44,w:20},{m:"March",a:2.59,s:35,w:24},{m:"April",a:2.63,s:41,w:18}];
+var MO=["Jan","Feb","Mar","Apr"];
+
+var API="https://script.google.com/macros/s/AKfycbxi0ncD9TgMv0B6d5qoThutchf0huxSqgJcWKS-qxeib2kJ-ZZDgB21og-PaR2ZgzsJ/exec";
+var syncing=false;
+function showStatus(msg,ok){
+var el=document.getElementById("status");
+if(!el){el=document.createElement("div");el.id="status";el.style.cssText="position:fixed;top:10px;right:10px;padding:10px 16px;border-radius:10px;font-size:12px;font-weight:600;z-index:999;transition:opacity .3s";document.body.appendChild(el)}
+el.style.background=ok?"#e2f5ec":"#fde8e8";el.style.color=ok?"#0f5240":"#7a2222";el.textContent=msg;el.style.opacity="1";
+setTimeout(function(){el.style.opacity="0"},3000)
+}
+
+// Load coaching log from Google Sheets
+function clLoadCloud(cb){
+fetch(API+"?action=read",{redirect:"follow"}).then(function(r){return r.json()}).then(function(d){
+if(d.success&&d.data){
+CL=d.data.map(function(x){return{id:x.id,rep:x.rep||"",date:x.date||"",purp:x.purpose||"",pri:x.priority||"Routine",coach:x.coach||"",act:x.action||"",stat:x.status||"Open",fu:x.followUp||"",notes:x.notes||""}});
+clNxt=CL.reduce(function(m,x){return Math.max(m,parseInt(x.id)||0)},0)+1;
+}showStatus("☁ Loaded from cloud",true);if(cb)cb()}).catch(function(err){showStatus("Cloud load failed: "+(err.message||""),false);clLoad();if(cb)cb()})
+}
+
+function clAddCloud(entry,cb){
+syncing=true;
+fetch(API,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"add",rep:entry.rep,date:entry.date,purpose:entry.purp,priority:entry.pri,coach:entry.coach,action_items:entry.act,status:entry.stat,followUp:entry.fu,notes:entry.notes})}).then(function(r){return r.json()}).then(function(d){
+if(d.success&&d.id)entry.id=d.id;
+syncing=false;showStatus("☁ Saved to cloud",true);if(cb)cb()}).catch(function(err){syncing=false;showStatus("Save failed: "+(err.message||""),false);if(cb)cb()})
+}
+
+function clUpdateCloud(entry,cb){
+syncing=true;
+fetch(API,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"update",id:entry.id,rep:entry.rep,date:entry.date,purpose:entry.purp,priority:entry.pri,coach:entry.coach,action_items:entry.act,status:entry.stat,followUp:entry.fu,notes:entry.notes})}).then(function(r){return r.json()}).then(function(){syncing=false;showStatus("☁ Updated",true);if(cb)cb()}).catch(function(err){syncing=false;showStatus("Update failed: "+(err.message||""),false);if(cb)cb()})
+}
+
+function clDeleteCloud(id,cb){
+syncing=true;
+fetch(API,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"delete",id:id})}).then(function(r){return r.json()}).then(function(){syncing=false;showStatus("☁ Deleted",true);if(cb)cb()}).catch(function(err){syncing=false;showStatus("Delete failed: "+(err.message||""),false);if(cb)cb()})
+}
+
+function repUpdateCloud(r){
+fetch(API,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"updateRep",id:r.id,name:r.n,role:r.r,manager:r.mg})}).then(function(){showStatus("☁ Rep updated",true)}).catch(function(){showStatus("Rep update failed",false)})
+}
+
+// Sync indicator
+function syncBadge(){return syncing?'<span style="display:inline-block;padding:2px 8px;border-radius:8px;background:#fef8e8;color:#8a6d1b;font-size:10px;font-weight:600;margin-left:8px">⟳ Syncing...</span>':'<span style="display:inline-block;padding:2px 8px;border-radius:8px;background:#e2f5ec;color:#0f5240;font-size:10px;font-weight:600;margin-left:8px">☁ Cloud Saved</span>'}
+
+// COACHING LOG
+var CL=[
+{id:1,rep:"Sandra Arnette",date:"3/15/2026",purp:"Discovery Skills Review",pri:"Urgent",coach:"Terry",act:"2-week discovery bootcamp. Shadow Matt McCarthy. Require 3.0+.",stat:"Open",fu:"3/29/2026",notes:"Discovery scores lowest on team (1.10). Committed to improving."},
+{id:2,rep:"Sandra Arnette",date:"3/22/2026",purp:"Volume vs Quality",pri:"Priority",coach:"Terry",act:"Reduce target 15→10. Focus prep quality. Track weekly.",stat:"Open",fu:"4/5/2026",notes:"Mar volume 514 but avg dropped to 2.39."},
+{id:3,rep:"Africa Brown",date:"3/18/2026",purp:"Consistency Coaching",pri:"Priority",coach:"Terry",act:"Weekly reviews. Consistency checklist. Identify patterns.",stat:"Open",fu:"3/25/2026",notes:"Scores swing: Jan 2.44 → Feb 2.74 → Mar 2.59."},
+{id:4,rep:"Lauren Hopkins",date:"3/28/2026",purp:"Pricing Confidence",pri:"Priority",coach:"Terry",act:"Pricing bootcamp. Shadow Jenna Flory on 3 conversations.",stat:"Open",fu:"4/11/2026",notes:"Top performer (2.97) but pricing weakest (1.80)."},
+{id:5,rep:"Patrick McCaghren",date:"3/25/2026",purp:"Pricing & Activity",pri:"Urgent",coach:"Terry",act:"CRITICAL pricing bootcamp. Ensure all calls scored.",stat:"Open",fu:"4/1/2026",notes:"Pricing 1.00. Only 7 scored of 441 total."},
+{id:6,rep:"Chloe Arnette",date:"3/20/2026",purp:"Intro Call Framework",pri:"Priority",coach:"Terry",act:"Adopt Next Steps framework. Practice 15 calls.",stat:"Complete",fu:"4/3/2026",notes:"Showing improvement (2.38 → 2.94)."},
+{id:7,rep:"Myranda Grabman",date:"3/20/2026",purp:"High Performer Check-in",pri:"Routine",coach:"Terry",act:"Continue approach. Focus discovery (2.20) as growth area.",stat:"Complete",fu:"4/17/2026",notes:"Rock solid (2.89, 726 calls). Self-motivated."},
+{id:8,rep:"Jenna Flory",date:"3/22/2026",purp:"Discovery Bootcamp",pri:"Urgent",coach:"Terry",act:"2-week intensive. Require 3.0+ discovery before demo.",stat:"Open",fu:"4/5/2026",notes:"Excellent demos but discovery gap (2.15, 72% struggling)."}
+];
+var clNxt=9;
+function clSave(){try{localStorage.setItem("mv_ecl",JSON.stringify(CL));localStorage.setItem("mv_ecn",clNxt)}catch(x){}}
+function clLoad(){try{var a=localStorage.getItem("mv_ecl");if(a){CL=JSON.parse(a);clNxt=parseInt(localStorage.getItem("mv_ecn"))||9}}catch(x){}}
+
+function sc(v){return v>=3?"#0f7b5f":v>=2.7?"#2563a8":v>=2.5?"#a07d0a":"#b83b3b"}
+function scBg(v){return v>=3?"#1a6b54":v>=2.7?"#1e3a6f":v>=2.5?"#6b5a0a":"#6b1d1d"}
+function pct(n,t){return t?Math.round(n/t*100):0}
+function hu(n){return n.split("").reduce(function(a,c){return a+c.charCodeAt(0)},0)%360}
+function ini(n){return n.split(" ").map(function(w){return w[0]}).join("")}
+function av(n,z){return'<div class="av" style="width:'+z+'px;height:'+z+'px;font-size:'+(z*.36)+'px;background:hsl('+hu(n)+',35%,42%)">'+ini(n)+'</div>'}
+function spark(data,w,h){w=w||100;h=h||28;var v=data.map(function(val,i){return val!==null?{v:val,i:i}:null}).filter(Boolean);if(v.length<2)return'<span style="font-size:11px;color:#b0bcc6">—</span>';var mn=Math.min.apply(null,v.map(function(d){return d.v}))-0.1,mx=Math.max.apply(null,v.map(function(d){return d.v}))+0.1;var pts=v.map(function(d){return((d.i/3)*(w-4)+2)+","+(h-2-((d.v-mn)/(mx-mn))*(h-4))}).join(" ");var last=v[v.length-1].v,first=v[0].v,col=last>first?"#0f7b5f":last<first?"#b83b3b":"#6b7a88";var dots=v.map(function(d,i){var x=(d.i/3)*(w-4)+2,y=h-2-((d.v-mn)/(mx-mn))*(h-4);return'<circle cx="'+x+'" cy="'+y+'" r="'+(i===v.length-1?3:1.5)+'" fill="'+col+'"/>'}).join("");return'<svg class="spark" width="'+w+'" height="'+h+'"><polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+dots+'</svg>'}
+
+var T="Overview",sK="total",sD="desc",sV="",selR=null,coachV="all",coachF="";
+var TABS=["Overview","Call Coaching","Skills & Gaps","Trends","Objections","Pricing","Activity","Coaching Plans","1:1 Log","Rep Roster"];
+
+function sR(){var f=R.filter(function(r){return r.n.toLowerCase().indexOf(sV.toLowerCase())>=0&&r.total>0});f.sort(function(a,b){return sD==="desc"?(b[sK]||0)-(a[sK]||0):(a[sK]||0)-(b[sK]||0)});return f}
+
+function rTabs(){var h="";TABS.forEach(function(t){h+='<button class="tb'+(T===t?" a":"")+'" onclick="T=\''+t.replace(/'/g,"\\'")+'\';selR=null;coachV=\'all\';render()">'+t+'</button>'});document.getElementById("tabs").innerHTML=h}
+
+// ===== OVERVIEW =====
+function rOverview(){
+var reps=R.filter(function(r){return r.total>0});
+var tc=reps.reduce(function(s,r){return s+r.total},0);
+var ta=(reps.reduce(function(s,r){return s+r.avg*r.total},0)/tc).toFixed(2);
+var to=reps.reduce(function(s,r){return s+r.opps},0);
+var sr=sR();var si=sK,arrow=sD==="desc"?"▼":"▲";
+var h='<div class="cards"><div class="cd"><div class="cd-l">Calls Reviewed</div><div class="cd-v" style="color:#1e2b35">'+tc.toLocaleString()+'</div><div class="cd-s">YTD</div></div><div class="cd"><div class="cd-l">Team Avg</div><div class="cd-v" style="color:'+sc(parseFloat(ta))+'">'+ta+'</div><div class="cd-s">Out of 5.0</div></div><div class="cd"><div class="cd-l">Opps Coached</div><div class="cd-v" style="color:#1e2b35">'+to.toLocaleString()+'</div><div class="cd-s">100% coverage</div></div><div class="cd"><div class="cd-l">Reps</div><div class="cd-v" style="color:#1e2b35">'+R.length+'</div><div class="cd-s">SDR/AE/SE</div></div></div>';
+h+='<div class="mo">';MO_DATA.forEach(function(m){h+='<div class="mc"><div style="font-size:11px;color:#6b7a88">'+m.m+'</div><div style="font-size:22px;font-weight:700;color:'+sc(m.a)+';margin-top:2px">'+m.a+'</div><div style="display:flex;gap:8px;margin-top:4px"><span style="font-size:10px;color:#0f7b5f">▲'+m.s+'%</span><span style="font-size:10px;color:#b83b3b">▼'+m.w+'%</span></div></div>'});h+='</div>';
+h+='<div class="stl">Team Roster</div><div class="tw"><table><thead><tr><th>Rep</th><th style="width:50px">Role</th><th style="width:90px">Manager</th><th style="text-align:right;cursor:pointer" onclick="sK=\'total\';sD=sD===\'desc\'?\'asc\':\'desc\';render()">Reviewed'+(si==="total"?" "+arrow:"")+'</th><th style="text-align:right;cursor:pointer" onclick="sK=\'avg\';sD=sD===\'desc\'?\'asc\':\'desc\';render()">Avg'+(si==="avg"?" "+arrow:"")+'</th><th style="text-align:center">Trend</th><th style="text-align:right;cursor:pointer" onclick="sK=\'opps\';sD=sD===\'desc\'?\'asc\':\'desc\';render()">Opps'+(si==="opps"?" "+arrow:"")+'</th><th style="width:40px"></th></tr></thead><tbody>';
+sr.forEach(function(r){var rb=r.r==="SDR"?"#2563a8":r.r==="AE"?"#1a6b54":"#7c3aed";h+='<tr style="cursor:pointer"><td onclick="selR='+r.id+';T=\'Call Coaching\';render()"><div class="nc">'+av(r.n,28)+'<div style="font-weight:600;font-size:13px;color:#1e2b35">'+r.n+'</div></div></td><td><span class="bdg" style="background:'+rb+';font-size:9px;padding:2px 6px">'+r.r+'</span></td><td style="font-size:11px;color:#5a6b7a">'+(r.mg||"—")+'</td><td style="text-align:right;font-weight:600" onclick="selR='+r.id+';T=\'Call Coaching\';render()">'+r.total+'</td><td style="text-align:right" onclick="selR='+r.id+';T=\'Call Coaching\';render()"><span class="bdg" style="background:'+scBg(r.avg)+'">'+r.avg+'</span></td><td style="text-align:center" onclick="selR='+r.id+';T=\'Call Coaching\';render()">'+spark(r.trend)+'</td><td style="text-align:right;font-weight:500" onclick="selR='+r.id+';T=\'Call Coaching\';render()">'+r.opps+'</td><td><button class="bt bb2 bs" onclick="event.stopPropagation();edRep('+r.id+')" style="white-space:nowrap">Edit</button></td></tr>'});
+h+='</tbody></table></div>';return h}
+
+// ===== CALL COACHING =====
+function rCoach(){var h='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px"><button class="fb'+(selR===null?" a":"")+'" onclick="selR=null;render()">All</button>';R.filter(function(r){return r.total>0}).forEach(function(r){h+='<button class="fb'+(selR===r.id?" a":"")+'" onclick="selR='+r.id+';render()">'+r.n.split(" ")[0]+'</button>'});h+='</div>';
+(selR?R.filter(function(r){return r.id===selR}):R.filter(function(r){return r.total>0})).forEach(function(r){
+h+='<div class="rc"><div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">'+av(r.n,36)+'<div style="flex:1"><div style="font-weight:600;font-size:15px;color:#1e2b35">'+r.n+' <span style="font-size:11px;color:#6b7a88">'+r.r+' · '+(r.mg||"—")+'</span></div><div style="font-size:12px;color:#6b7a88">'+r.total+' calls · '+r.avg+' avg · '+r.tl+'</div></div><div style="display:flex;gap:6px;align-items:center"><button class="bt bb2 bs" onclick="edRep('+r.id+')">Edit Profile</button><div style="font-size:26px;font-weight:700;color:'+sc(r.avg)+'">'+r.avg+'</div></div></div>';
+h+='<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">';
+[{l:"Excellent",v:r.exc,c:"#1a6b54"},{l:"Good",v:r.good,c:"#2563a8"},{l:"Needs Work",v:r.nw,c:"#b83b3b"}].forEach(function(b){h+='<div style="flex:1;min-width:85;border-radius:10px;padding:10px;text-align:center;background:'+(b.v>0?b.c:"#edf1f5")+'"><div style="font-size:20px;font-weight:700;color:'+(b.v>0?"#fff":"#b0bcc6")+'">'+(b.v>0?b.v:"—")+'</div><div style="font-size:10px;color:'+(b.v>0?"rgba(255,255,255,.8)":"#8494a2")+'">'+b.l+(b.v>0?" ("+pct(b.v,r.total)+"%)":"")+'</div></div>'});h+='</div>';
+h+='<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:600;color:#6b7a88;text-transform:uppercase;margin-bottom:6px">Key Themes</div><div style="display:flex;gap:6px;flex-wrap:wrap">';r.themes.forEach(function(t){h+='<span class="tg tg-g">'+t+'</span>'});h+='</div></div>';
+h+='<div><div style="font-size:10px;font-weight:600;color:#6b7a88;text-transform:uppercase;margin-bottom:6px">Coaching Actions</div><div style="display:flex;gap:6px;flex-wrap:wrap">';r.actions.forEach(function(a){h+='<span class="tg tg-y">'+a+'</span>'});h+='</div></div></div>'});return h}
+
+// ===== SKILLS =====
+function rSkills(){var h='<div class="stl" style="color:#b83b3b">Critical Gaps (Avg < 2.0)</div><div class="ssb">Urgent coaching needed</div>';
+COMPS.filter(function(c){return c.t==="gap"}).forEach(function(c,i){h+='<div class="cc" onclick="var d=document.getElementById(\'cg'+i+'\');if(d)d.classList.toggle(\'op\')"><div style="display:flex;align-items:center;gap:14px"><div style="flex:1"><div style="font-size:13px;font-weight:600;color:#1e2b35">'+c.n+'</div><div class="bb"><div class="bf" style="width:'+((c.a/5)*100)+'%;background:'+sc(c.a)+'"></div></div></div><div style="font-size:22px;font-weight:700;color:'+sc(c.a)+';min-width:50px;text-align:right">'+c.a+'</div></div><div class="det" id="cg'+i+'" style="background:#fde8e8;color:#7a2222">'+c.d+'</div></div>'});
+h+='<div class="stl" style="color:#0f7b5f;margin-top:32px">Team Strengths (Avg > 3.0)</div><div class="ssb">Leverage for peer coaching</div>';
+COMPS.filter(function(c){return c.t==="str"}).forEach(function(c,i){h+='<div class="cc" onclick="var d=document.getElementById(\'cs'+i+'\');if(d)d.classList.toggle(\'op\')"><div style="display:flex;align-items:center;gap:14px"><div style="flex:1"><div style="font-size:13px;font-weight:600;color:#1e2b35">'+c.n+'</div><div class="bb"><div class="bf" style="width:'+((c.a/5)*100)+'%;background:'+sc(c.a)+'"></div></div></div><div style="font-size:22px;font-weight:700;color:'+sc(c.a)+';min-width:50px;text-align:right">'+c.a+'</div></div><div class="det" id="cs'+i+'" style="background:#e2f5ec;color:#0f5240">'+c.d+'</div></div>'});
+h+='<div class="stl" style="margin-top:32px">Individual Top 3 Gaps</div><div class="gg">';R.filter(function(r){return r.total>0}).forEach(function(r){h+='<div class="gc"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'+av(r.n,24)+'<span style="font-weight:600;font-size:13px;color:#1e2b35">'+r.n+'</span></div>';r.gaps.forEach(function(g,i){h+='<div style="font-size:11px;color:'+(g.includes("Limited")?"#b0bcc6":"#4a5968")+';padding:2px 0">'+(i+1)+'. '+g+'</div>'});h+='</div>'});h+='</div>';return h}
+
+// ===== TRENDS =====
+function rTrends(){var h='<div class="stl">Monthly Performance</div><div class="ssb">Feb best. Mar regression. Apr recovering.</div><div class="mo">';
+MO_DATA.forEach(function(m){h+='<div class="mc" style="text-align:center;padding:18px"><div style="font-size:11px;color:#6b7a88">'+m.m+'</div><div style="font-size:30px;font-weight:700;color:'+sc(m.a)+';margin-top:4px">'+m.a+'</div><div style="display:flex;justify-content:center;gap:14px;margin-top:8px"><div><span style="font-size:16px;font-weight:700;color:#0f7b5f">'+m.s+'%</span><div style="font-size:9px;color:#8494a2">Strong</div></div><div><span style="font-size:16px;font-weight:700;color:#b83b3b">'+m.w+'%</span><div style="font-size:9px;color:#8494a2">Weak</div></div></div></div>'});h+='</div>';
+h+='<div class="stl" style="color:#0f7b5f">Improving</div><div class="ssb">Positive trajectory</div>';R.filter(function(r){return r.tl==="Strong ↑"||r.tl==="Improving"}).forEach(function(r){h+='<div class="tr">'+av(r.n,30)+'<div style="flex:1"><div style="font-weight:600;font-size:13px;color:#1e2b35">'+r.n+' <span style="font-size:10px;color:#6b7a88">'+r.r+'</span></div><div style="font-size:11px;color:#0f7b5f">'+r.tl+'</div></div>'+spark(r.trend,120,30)+'<div style="font-size:16px;font-weight:700;color:'+sc(r.avg)+'">'+r.avg+'</div></div>'});
+h+='<div class="stl" style="color:#b83b3b;margin-top:24px">Watch List</div><div class="ssb">Monitor closely</div>';R.filter(function(r){return r.tl==="Recovering"}).forEach(function(r){h+='<div class="tr w">'+av(r.n,30)+'<div style="flex:1"><div style="font-weight:600;font-size:13px;color:#1e2b35">'+r.n+'</div><div style="font-size:11px;color:#b83b3b">'+r.tl+'</div></div>'+spark(r.trend,120,30)+'<div style="font-size:16px;font-weight:700;color:'+sc(r.avg)+'">'+r.avg+'</div></div>'});
+h+='<div class="stl" style="margin-top:24px">All Reps</div><div class="tg2">';R.filter(function(r){return r.total>0}).forEach(function(r){h+='<div class="tm">'+av(r.n,24)+'<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:500;color:#2d3a45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+r.n+'</div><div style="font-size:10px;color:#8494a2">'+r.tl+'</div></div>'+spark(r.trend,60,20)+'<span style="font-size:12px;font-weight:700;color:'+sc(r.avg)+'">'+r.avg+'</span></div>'});h+='</div>';return h}
+
+// ===== OBJECTIONS =====
+function rObj(){var h='<div class="stl">Objection Handling Effectiveness</div><div class="ssb">Performance across call types</div>';
+[{nm:"Elite Handlers",t:"T1",bg:"#1a6b54"},{nm:"Strong Handlers",t:"T2",bg:"#8a6d1b"},{nm:"Development Needed",t:"T3",bg:"#b83b3b"}].forEach(function(tier){
+var reps=R.filter(function(r){return r.obj.tier===tier.t&&r.total>0}).sort(function(a,b){return b.obj.score-a.obj.score});
+if(!reps.length)return;
+h+='<div class="tc"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><span class="bdg" style="background:'+tier.bg+';font-size:11px">'+tier.t+'</span><span style="font-weight:600;font-size:14px;color:#1e2b35">'+tier.nm+' ('+reps.length+')</span></div>';
+reps.forEach(function(r){h+='<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #edf1f5">'+av(r.n,30)+'<div style="flex:1"><div style="font-weight:600;font-size:13px;color:#1e2b35">'+r.n+' <span style="font-size:10px;color:#6b7a88">'+r.r+' · '+r.mg+'</span></div><div style="font-size:11px;color:#5a6b7a;margin-top:2px">'+r.obj.type+'</div></div><div style="font-size:20px;font-weight:700;color:'+sc(r.obj.score)+'">'+r.obj.score+'</div></div>'});h+='</div>'});
+h+='<div class="rc"><div class="stl" style="font-size:14px">Key Insights</div><div style="font-size:12px;color:#4a5968;line-height:1.8">• SE team dominates technical objections<br>• AE strength: Jenna Flory, Candice Chuy, Monica Lopez<br>• Cold call leaders: Matt McCarthy, Myranda Grabman<br>• Development: Africa Brown needs coaching</div></div>';return h}
+
+// ===== PRICING =====
+function rPrice(){var h='<div class="stl">Pricing & Negotiation</div><div class="ssb">Team avg 2.50 — only 3 reps above 2.75</div>';
+[{nm:"Top Performers (≥2.75)",t:"top",bg:"#1a6b54"},{nm:"Mid-Tier (2.25-2.75)",t:"mid",bg:"#8a6d1b"},{nm:"Urgent Development (<2.0)",t:"critical",bg:"#b83b3b"}].forEach(function(tier){
+var reps=R.filter(function(r){return r.price.tier===tier.t}).sort(function(a,b){return b.price.score-a.price.score});
+if(!reps.length)return;
+h+='<div class="tc"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><span class="bdg" style="background:'+tier.bg+';font-size:11px">'+tier.t.toUpperCase()+'</span><span style="font-weight:600;font-size:14px;color:#1e2b35">'+tier.nm+'</span></div>';
+reps.forEach(function(r){h+='<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #edf1f5">'+av(r.n,30)+'<div style="flex:1"><div style="font-weight:600;font-size:13px;color:#1e2b35">'+r.n+'</div></div><div style="font-size:20px;font-weight:700;color:'+sc(r.price.score)+'">'+r.price.score+'</div></div>'});h+='</div>'});
+h+='<div class="rc"><div class="stl" style="font-size:14px">Key Insights</div><div style="font-size:12px;color:#4a5968;line-height:1.8">• Patrick McCaghren: 100% below 2.0 — CRITICAL<br>• Lauren Hopkins: 60% below 2.0 — new rep risk<br>• 39% of Sandra\'s pricing below 2.0</div></div>';return h}
+
+// ===== ACTIVITY =====
+function rAct(){var h='<div class="stl">Outreach Activity & Efficiency</div><div class="ssb">Sweet spot: 400-700 calls with 2.75+ avg</div>';
+var sorted=R.filter(function(r){return r.vol.total>0}).sort(function(a,b){return b.vol.total-a.vol.total});
+h+='<div class="tw"><table><thead><tr><th>#</th><th>Rep</th><th style="width:50px">Role</th><th style="text-align:right">Calls YTD</th><th style="text-align:right">Avg</th><th style="text-align:center">Trend</th><th>Efficiency</th></tr></thead><tbody>';
+sorted.forEach(function(r,i){h+='<tr><td style="color:#8494a2">'+(i+1)+'</td><td><div class="nc">'+av(r.n,26)+'<span style="font-weight:600;font-size:13px;color:#1e2b35">'+r.n+'</span></div></td><td><span class="bdg" style="background:'+(r.r==="SDR"?"#2563a8":r.r==="AE"?"#1a6b54":"#7c3aed")+';font-size:9px;padding:2px 6px">'+r.r+'</span></td><td style="text-align:right;font-weight:600;color:#2563a8">'+r.vol.total.toLocaleString()+'</td><td style="text-align:right"><span class="bdg" style="background:'+scBg(r.avg)+'">'+r.avg+'</span></td><td style="text-align:center">'+spark(r.trend,80,22)+'</td><td style="font-size:11px;color:#4a5968">'+r.vol.eff+'</td></tr>'});
+h+='</tbody></table></div>';return h}
+
+// ===== COACHING PLANS =====
+function rPlans(){var h='<div class="stl">Coaching Intervention Plans</div><div class="ssb">Prioritized by urgency</div>';
+h+='<div class="tc" style="border-left:4px solid #b83b3b;margin-bottom:16px"><div style="font-weight:700;font-size:14px;color:#b83b3b;margin-bottom:8px">CRITICAL — Immediate Action</div><div style="font-size:12px;color:#4a5968;line-height:2"><b>Discovery:</b> Sandra, Candice, Jenna, Brandon<br><b>Pricing:</b> Patrick (1.00), Lauren (1.80)<br><b>Intro Call:</b> Chloe, Brandon, Candice</div></div>';
+h+='<div class="tc" style="border-left:4px solid #a07d0a;margin-bottom:16px"><div style="font-weight:700;font-size:14px;color:#a07d0a;margin-bottom:8px">HIGH PRIORITY — Next 30 Days</div><div style="font-size:12px;color:#4a5968;line-height:2"><b>GK Navigation:</b> Sandra, Africa, Amber, Kaelyne<br><b>Volume Reduction:</b> Sandra, Africa<br><b>Consistency:</b> Africa, Amber, Candice</div></div>';
+h+='<div class="tc" style="border-left:4px solid #2563a8;margin-bottom:28px"><div style="font-weight:700;font-size:14px;color:#2563a8;margin-bottom:8px">ONGOING</div><div style="font-size:12px;color:#4a5968;line-height:2"><b>Objections:</b> Africa Brown<br><b>Timeline:</b> Myranda, Matt, Monica<br><b>Reduce Needs Work:</b> Amber (28%), Candice (28%), Tony (25%)</div></div>';
+return h}
+
+// ===== 1:1 LOG =====
+function daysSince(d){try{return Math.round((new Date()-new Date(d))/864e5)}catch(x){return 0}}
+function dueTg(fu,st){if(st==="Complete")return'<span class="bdg" style="background:#1a6b54;font-size:9px">Done</span>';if(!fu)return"";var d=daysSince(fu);if(d>0)return'<span style="font-size:10px;padding:2px 8px;border-radius:8px;background:#fde8e8;color:#b83b3b;font-weight:600">Overdue '+d+'d</span>';if(d>-8)return'<span style="font-size:10px;padding:2px 8px;border-radius:8px;background:#fef8e8;color:#8a6d1b;font-weight:600">Due in '+Math.abs(d)+'d</span>';return'<span style="font-size:10px;padding:2px 8px;border-radius:8px;background:#e2f5ec;color:#0f5240;font-weight:600">Due '+fu+'</span>'}
+
+function rLogEntry(x){var cls=x.pri==="Urgent"?"urg":x.pri==="Priority"?"pri":"";var pc=x.pri==="Urgent"?"#b83b3b":x.pri==="Priority"?"#c4880d":"#1a6b54";
+var h='<div class="cen '+cls+'"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap"><span style="font-size:12px;font-weight:700;color:#1e2b35">'+x.date+'</span><span class="bdg" style="background:'+pc+';font-size:9px">'+x.pri+'</span><span class="bdg" style="background:'+(x.stat==="Open"?"#b83b3b":"#1a6b54")+';font-size:9px">'+x.stat+'</span> '+dueTg(x.fu,x.stat)+'<span style="margin-left:auto;font-size:11px;color:#5a6b7a">Coach: <b>'+x.coach+'</b></span></div>';
+h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'+av(x.rep,24)+'<span style="font-weight:600;font-size:13px;color:#1e2b35">'+x.rep+'</span></div>';
+h+='<div style="font-size:13px;font-weight:600;color:#1e2b35;margin-bottom:4px">'+x.purp+'</div>';
+h+='<div style="font-size:12px;color:#2d3a45;line-height:1.5"><b style="color:#6b7a88">Action:</b> '+x.act+'</div>';
+if(x.notes)h+='<div style="font-size:11px;color:#5a6b7a;line-height:1.5;margin-top:6px;padding-top:6px;border-top:1px solid #e8edf2"><b>Notes:</b> '+x.notes+'</div>';
+h+='<div style="display:flex;gap:6px;margin-top:8px">';
+if(x.stat==="Open")h+='<button class="bt bg bs" onclick="clMk('+x.id+',\'Complete\')">✓ Complete</button>';
+else h+='<button class="bt bo bs" onclick="clMk('+x.id+',\'Open\')">Reopen</button>';
+h+='<button class="bt bb2 bs" onclick="clEd('+x.id+')">Edit</button><button class="bt br bs" onclick="clDl('+x.id+')">Delete</button>';
+if(x.stat==="Open")h+='<button class="bt bo bs" onclick="clFu('+x.id+')">+ Follow-up</button>';
+h+='</div></div>';return h}
+
+function rLog(){
+var q=document.getElementById("search").value.trim().toLowerCase();
+var h='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">';
+["all","byRep","open","stats"].forEach(function(v){var l={all:"All Sessions",byRep:"By Rep",open:"Open Actions",stats:"Stats"};h+='<button class="stb'+(coachV===v?" a":"")+'" onclick="coachV=\''+v+'\';render()">'+l[v]+'</button>'});
+var coaches={};CL.forEach(function(x){if(x.coach)coaches[x.coach]=1});
+h+='<span style="margin-left:8px;font-size:10px;color:#6b7a88;line-height:28px">Coach:</span>';
+h+='<button class="stb'+(coachF===""?" a":"")+'" onclick="coachF=\'\';render()">All</button>';
+Object.keys(coaches).forEach(function(c){h+='<button class="stb'+(coachF===c?" a":"")+'" onclick="coachF=\''+c+'\';render()">'+c+'</button>'});
+h+='</div><div style="margin-bottom:16px;display:flex;gap:8px;align-items:center"><button class="bt bg" onclick="clAd()">+ New Coaching Session</button><button class="bt bo" onclick="clLoadCloud(function(){render()})" title="Refresh from Google Sheets">⟳ Refresh</button>'+syncBadge()+'</div>';
+
+var fl=CL.filter(function(x){if(coachF&&x.coach!==coachF)return false;if(q.length>=2)return x.rep.toLowerCase().indexOf(q)>=0||x.purp.toLowerCase().indexOf(q)>=0||(x.notes||"").toLowerCase().indexOf(q)>=0;return true});
+var op=CL.filter(function(x){return x.stat==="Open"}).length;
+h+='<div class="cards"><div class="cd"><div class="cd-l">Sessions</div><div class="cd-v">'+CL.length+'</div></div><div class="cd"><div class="cd-l">Open</div><div class="cd-v" style="color:#b83b3b">'+op+'</div></div><div class="cd"><div class="cd-l">Complete</div><div class="cd-v" style="color:#0f7b5f">'+(CL.length-op)+'</div></div></div>';
+
+if(coachV==="all"){fl.sort(function(a,b){return new Date(b.date)-new Date(a.date)});fl.forEach(function(x){h+=rLogEntry(x)})}
+else if(coachV==="byRep"){var m={};fl.forEach(function(x){if(!m[x.rep])m[x.rep]=[];m[x.rep].push(x)});Object.keys(m).sort().forEach(function(rep){var entries=m[rep].sort(function(a,b){return new Date(b.date)-new Date(a.date)});var emp=R.find(function(r){return r.n===rep});h+='<div class="rc" style="border-left:4px solid #1a6b54"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">'+av(rep,36)+'<div style="flex:1"><div style="font-size:15px;font-weight:700;color:#1e2b35">'+rep+'</div><div style="font-size:12px;color:#6b7a88">'+entries.length+' sessions'+(emp?' · '+emp.r+' · '+(emp.mg||"—"):'')+'</div></div><button class="bt bg bs" onclick="clAd(\''+rep.replace(/'/g,"\\'")+'\')"">+ Add</button></div>';entries.forEach(function(x){h+=rLogEntry(x)});h+='</div>'})}
+else if(coachV==="open"){var open=fl.filter(function(x){return x.stat==="Open"}).sort(function(a,b){var p={Urgent:0,Priority:1,Routine:2};return(p[a.pri]||2)-(p[b.pri]||2)});open.forEach(function(x){h+=rLogEntry(x)});if(!open.length)h+='<div class="emp">No open actions!</div>'}
+else if(coachV==="stats"){
+var rs={};CL.forEach(function(x){if(!rs[x.rep])rs[x.rep]={n:x.rep,tot:0,op:0,urg:0,last:""};rs[x.rep].tot++;if(x.stat==="Open")rs[x.rep].op++;if(x.pri==="Urgent"&&x.stat==="Open")rs[x.rep].urg++;if(!rs[x.rep].last||new Date(x.date)>new Date(rs[x.rep].last))rs[x.rep].last=x.date});
+var stats=Object.values(rs).sort(function(a,b){return b.tot-a.tot});
+var noCoach=R.filter(function(r){return r.total>0&&!stats.find(function(s){return s.n===r.n})});
+h+='<div class="tw"><table><thead><tr><th>Rep</th><th>Role</th><th>Manager</th><th>Sessions</th><th>Open</th><th>Last</th><th>Days Since</th></tr></thead><tbody>';
+stats.forEach(function(s){var ds=s.last?daysSince(s.last):"—";var emp=R.find(function(r){return r.n===s.n});h+='<tr style="cursor:pointer" onclick="coachV=\'byRep\';document.getElementById(\'search\').value=\''+s.n.split(' ')[0]+'\';render()"><td><div class="nc">'+av(s.n,26)+'<span style="font-weight:600;font-size:12px;color:#1e2b35">'+s.n+'</span></div></td><td style="font-size:11px">'+(emp?emp.r:"—")+'</td><td style="font-size:11px">'+(emp?emp.mg||"—":"—")+'</td><td style="font-weight:700">'+s.tot+'</td><td style="color:'+(s.op?"#b83b3b":"#0f7b5f")+';font-weight:600">'+s.op+'</td><td style="font-size:11px">'+s.last+'</td><td style="font-weight:600;color:'+(typeof ds==="number"&&ds>14?"#b83b3b":"#0f7b5f")+'">'+ds+'</td></tr>'});
+h+='</tbody></table></div>';
+if(noCoach.length){h+='<div class="rc" style="border-left:4px solid #b83b3b;margin-top:16px"><div style="font-size:14px;font-weight:700;color:#b83b3b;margin-bottom:8px">Not Yet Coached ('+noCoach.length+')</div><div style="display:flex;flex-wrap:wrap;gap:8px">';noCoach.forEach(function(r){h+='<div style="display:flex;align-items:center;gap:6px;background:#fde8e8;padding:6px 12px;border-radius:10px;font-size:12px;font-weight:500;color:#7a2222">'+av(r.n,22)+r.n+'</div>'});h+='</div></div>'}}
+if(!fl.length&&coachV!=="stats")h+='<div class="emp">No sessions found.</div>';
+return h}
+
+// LOG CRUD
+function modal(h){document.getElementById("mw").innerHTML='<div class="mbg" onclick="if(event.target===this)clMo()"><div class="mdl" onclick="event.stopPropagation()">'+h+'</div></div>';document.getElementById("mw").style.display="block"}
+function clMo(){document.getElementById("mw").style.display="none"}
+var clEI=null;
+function clAd(rep){clEI=null;var names=R.map(function(r){return r.n}).sort();var h='<h2>New 1:1 Session</h2><div class="fr"><div class="fg"><label>Rep</label><select id="cl-r">';names.forEach(function(n){h+='<option'+(n===rep?' selected':'')+'>'+n+'</option>'});h+='</select></div><div class="fg"><label>Date</label><input id="cl-d" value="'+new Date().toLocaleDateString("en-US")+'"/></div></div><div class="fg"><label>Purpose</label><input id="cl-p" placeholder="e.g. Discovery Skills Review"/></div><div class="fr3"><div class="fg"><label>Priority</label><select id="cl-pr"><option>Routine</option><option>Priority</option><option>Urgent</option></select></div><div class="fg"><label>Coach</label><input id="cl-c" value="Terry"/></div><div class="fg"><label>Follow-up</label><input id="cl-f" placeholder="4/15/2026"/></div></div><div class="fg"><label>Action Items</label><textarea id="cl-a" placeholder="Actions agreed upon..."></textarea></div><div class="fg"><label>Notes</label><textarea id="cl-n" placeholder="Session notes..."></textarea></div><div style="display:flex;gap:8px;margin-top:16px"><button class="bt bg" onclick="clSv()">Save</button><button class="bt bo" onclick="clMo()">Cancel</button></div>';modal(h)}
+function clEd(id){clEI=id;var x=CL.find(function(e){return e.id===id});if(!x)return;var names=R.map(function(r){return r.n}).sort();var h='<h2>Edit Session</h2><div class="fr"><div class="fg"><label>Rep</label><select id="cl-r">';names.forEach(function(n){h+='<option'+(n===x.rep?' selected':'')+'>'+n+'</option>'});h+='</select></div><div class="fg"><label>Date</label><input id="cl-d" value="'+x.date+'"/></div></div><div class="fg"><label>Purpose</label><input id="cl-p" value="'+(x.purp||"").replace(/"/g,"&quot;")+'"/></div><div class="fr3"><div class="fg"><label>Priority</label><select id="cl-pr"><option'+(x.pri==="Routine"?" selected":"")+'>Routine</option><option'+(x.pri==="Priority"?" selected":"")+'>Priority</option><option'+(x.pri==="Urgent"?" selected":"")+'>Urgent</option></select></div><div class="fg"><label>Coach</label><input id="cl-c" value="'+x.coach+'"/></div><div class="fg"><label>Follow-up</label><input id="cl-f" value="'+(x.fu||"")+'"/></div></div><div class="fg"><label>Status</label><select id="cl-s"><option'+(x.stat==="Open"?" selected":"")+'>Open</option><option'+(x.stat==="Complete"?" selected":"")+'>Complete</option></select></div><div class="fg"><label>Action Items</label><textarea id="cl-a">'+(x.act||"")+'</textarea></div><div class="fg"><label>Notes</label><textarea id="cl-n">'+(x.notes||"")+'</textarea></div><div style="display:flex;gap:8px;margin-top:16px"><button class="bt bg" onclick="clSv()">Save</button><button class="bt bo" onclick="clMo()">Cancel</button></div>';modal(h)}
+function clSv(){var rep=document.getElementById("cl-r").value,date=document.getElementById("cl-d").value.trim(),purp=document.getElementById("cl-p").value.trim(),pri=document.getElementById("cl-pr").value,coach=document.getElementById("cl-c").value.trim(),fu=document.getElementById("cl-f").value.trim(),act=document.getElementById("cl-a").value.trim(),notes=document.getElementById("cl-n").value.trim(),stEl=document.getElementById("cl-s"),stat=stEl?stEl.value:"Open";if(!purp){alert("Enter purpose.");return}if(clEI!==null){var x=CL.find(function(e){return e.id===clEI});if(x){x.rep=rep;x.date=date;x.purp=purp;x.pri=pri;x.coach=coach;x.fu=fu;x.act=act;x.notes=notes;x.stat=stat;clUpdateCloud(x)}clEI=null}else{var entry={id:clNxt++,rep:rep,date:date,purp:purp,pri:pri,coach:coach,fu:fu,act:act,notes:notes,stat:"Open"};CL.push(entry);clAddCloud(entry)}clSave();clMo();render()}
+function clDl(id){var x=CL.find(function(e){return e.id===id});if(x&&confirm("Delete: "+x.purp+"?")){CL=CL.filter(function(e){return e.id!==id});clDeleteCloud(id);clSave();render()}}
+function clMk(id,st){var x=CL.find(function(e){return e.id===id});if(x){x.stat=st;clUpdateCloud(x);clSave();render()}}
+function clFu(id){var x=CL.find(function(e){return e.id===id});if(!x)return;clAd(x.rep);setTimeout(function(){document.getElementById("cl-p").value="Follow-up: "+x.purp;document.getElementById("cl-c").value=x.coach},50)}
+
+// ===== SEARCH PROFILE =====
+function rProfile(r){
+var h='<div class="rc" style="border-left:4px solid #1a6b54"><div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">'+av(r.n,48)+'<div style="flex:1"><div style="font-size:20px;font-weight:700;color:#1a6b54">'+r.n+'</div><div style="font-size:12px;color:#5a6b7a">'+r.r+' · '+(r.mg||"—")+' · '+r.total+' calls · '+r.opps+' opps · '+r.tl+'</div></div><div style="display:flex;gap:6px;align-items:center"><button class="bt bb2 bs" onclick="edRep('+r.id+')">Edit Profile</button><div style="font-size:32px;font-weight:800;color:'+sc(r.avg)+'">'+r.avg+'</div></div></div>';
+h+='<div class="cards" style="margin-bottom:14px"><div class="cd"><div class="cd-v" style="font-size:18px;color:#1e2b35">'+r.total+'</div><div class="cd-l">Calls</div></div><div class="cd"><div class="cd-v" style="font-size:18px;color:'+sc(r.avg)+'">'+r.avg+'</div><div class="cd-l">Avg</div></div><div class="cd"><div class="cd-v" style="font-size:18px;color:#2563a8">'+r.opps+'</div><div class="cd-l">Opps</div></div>'+(r.obj.score?'<div class="cd"><div class="cd-v" style="font-size:18px;color:'+sc(r.obj.score)+'">'+r.obj.score+'</div><div class="cd-l">Objection</div></div>':'')+(r.price.score?'<div class="cd"><div class="cd-v" style="font-size:18px;color:'+sc(r.price.score)+'">'+r.price.score+'</div><div class="cd-l">Pricing</div></div>':'')+'</div>';
+var repCL=CL.filter(function(x){return x.rep===r.n}).sort(function(a,b){return new Date(b.date)-new Date(a.date)});
+if(repCL.length){h+='<div style="font-size:13px;font-weight:700;color:#c4880d;margin:16px 0 10px">1:1 Coaching Sessions ('+repCL.length+')</div>';repCL.forEach(function(x){h+=rLogEntry(x)})}
+h+='</div>';return h}
+
+// ===== REP ROSTER =====
+function rRoster(){
+var q=document.getElementById("search").value.trim().toLowerCase();
+var fl=R.filter(function(r){if(q.length>=2)return r.n.toLowerCase().indexOf(q)>=0||r.r.toLowerCase().indexOf(q)>=0||(r.mg||"").toLowerCase().indexOf(q)>=0;return true});
+var rc={SDR:0,AE:0,SE:0};R.forEach(function(r){if(rc[r.r]!==undefined)rc[r.r]++});
+var h='<div class="cards"><div class="cd"><div class="cd-v" style="color:#1e2b35">'+R.length+'</div><div class="cd-l">Total Reps</div></div><div class="cd"><div class="cd-v" style="color:#2563a8">'+rc.SDR+'</div><div class="cd-l">SDRs</div></div><div class="cd"><div class="cd-v" style="color:#0f7b5f">'+rc.AE+'</div><div class="cd-l">AEs</div></div><div class="cd"><div class="cd-v" style="color:#7c3aed">'+rc.SE+'</div><div class="cd-l">SEs</div></div></div>';
+h+='<div style="margin-bottom:16px;display:flex;gap:8px"><button class="bt bg" onclick="addNewRep()">+ Add New Employee</button></div>';
+h+='<div class="tw"><table><thead><tr><th>Employee</th><th style="width:55px">Role</th><th style="width:110px">Manager</th><th style="text-align:right;width:70px">Calls</th><th style="text-align:right;width:55px">Avg</th><th style="text-align:right;width:55px">Opps</th><th style="width:60px">Status</th><th style="width:80px">Actions</th></tr></thead><tbody>';
+fl.forEach(function(r){
+var rb=r.r==="SDR"?"#2563a8":r.r==="AE"?"#1a6b54":"#7c3aed";
+h+='<tr><td><div class="nc">'+av(r.n,28)+'<div style="font-weight:600;font-size:13px;color:#1e2b35">'+r.n+'</div></div></td>';
+h+='<td><span class="bdg" style="background:'+rb+';font-size:9px;padding:2px 6px">'+r.r+'</span></td>';
+h+='<td style="font-size:11px;color:#5a6b7a">'+(r.mg||"—")+'</td>';
+h+='<td style="text-align:right;font-weight:600">'+r.total+'</td>';
+h+='<td style="text-align:right">'+(r.avg?'<span class="bdg" style="background:'+scBg(r.avg)+'">'+r.avg+'</span>':'—')+'</td>';
+h+='<td style="text-align:right;font-weight:500">'+r.opps+'</td>';
+h+='<td style="font-size:11px;color:#5a6b7a">'+r.tl+'</td>';
+h+='<td><div style="display:flex;gap:4px"><button class="bt bb2 bs" onclick="edRep('+r.id+')">Edit</button><button class="bt br bs" onclick="delRep('+r.id+')">×</button></div></td>';
+h+='</tr>'});
+h+='</tbody></table></div>';
+return h}
+
+// ADD NEW REP
+function addNewRep(){
+var nextId=R.reduce(function(m,x){return Math.max(m,x.id)},0)+1;
+modal('<h2>Add New Employee</h2><div class="fg"><label>Full Name</label><input id="nr-n" placeholder="e.g. Jane Smith"/></div><div class="fr3"><div class="fg"><label>Role</label><select id="nr-r"><option value="SDR">SDR</option><option value="AE">AE</option><option value="SE">SE</option></select></div><div class="fg"><label>Manager</label><input id="nr-mg" placeholder="e.g. Avery Baccala"/></div><div class="fg"><label>Start Date</label><input id="nr-sd" placeholder="e.g. 4/14/2026"/></div></div><div style="display:flex;gap:8px;margin-top:16px"><button class="bt bg" onclick="svNewRep('+nextId+')">Save</button><button class="bt bo" onclick="clMo()">Cancel</button></div>')
+}
+function svNewRep(nextId){
+var n=document.getElementById("nr-n").value.trim();
+var r=document.getElementById("nr-r").value;
+var mg=document.getElementById("nr-mg").value.trim();
+var sd=document.getElementById("nr-sd").value.trim();
+if(!n){alert("Enter employee name.");return}
+var newRep={id:nextId,n:n,r:r,mg:mg,total:0,exc:0,good:0,nw:0,avg:0,gaps:["New hire","New hire","New hire"],trend:[null,null,null,null],tl:"New",opps:0,calls:0,themes:["New hire"],actions:["Onboarding"],obj:{tier:"—",score:0,type:"New hire"},price:{score:null,tier:null},vol:{total:0,mo:[null,null,null,null],eff:"New hire — "+sd}};
+R.push(newRep);
+repUpdateCloud(newRep);
+try{localStorage.setItem("mv_reps",JSON.stringify(R))}catch(x){}
+clMo();render()
+}
+
+// DELETE REP
+function delRep(id){
+var r=R.find(function(x){return x.id===id});
+if(r&&confirm("Remove "+r.n+" from the roster?\n\nThis will NOT delete their coaching log entries.")){
+R=R.filter(function(x){return x.id!==id});
+try{localStorage.setItem("mv_reps",JSON.stringify(R))}catch(x){}
+render()
+}
+}
+
+// ===== REP EDIT =====
+function edRep(id){
+var r=R.find(function(x){return x.id===id});if(!r)return;
+var h='<h2>Edit Rep Profile</h2>';
+h+='<div class="fg"><label>Name</label><input id="rn" value="'+r.n.replace(/"/g,"&quot;")+'"/></div>';
+h+='<div class="fr3"><div class="fg"><label>Role</label><select id="rr"><option'+(r.r==="SDR"?" selected":"")+'>SDR</option><option'+(r.r==="AE"?" selected":"")+'>AE</option><option'+(r.r==="SE"?" selected":"")+'>SE</option></select></div>';
+h+='<div class="fg"><label>Manager</label><input id="rm" value="'+(r.mg||"")+'"/></div>';
+h+='<div class="fg"><label>Start Date</label><input id="rsd" value="'+(r.sd||"")+'"/></div></div>';
+h+='<div class="fg"><label>Trend Label</label><input id="rtl" value="'+r.tl+'"/></div>';
+h+='<div style="display:flex;gap:8px;margin-top:16px"><button class="bt bg" onclick="svRep('+id+')">Save</button><button class="bt bo" onclick="clMo()">Cancel</button></div>';
+modal(h)}
+function svRep(id){
+var r=R.find(function(x){return x.id===id});if(!r)return;
+var oldName=r.n;
+r.n=document.getElementById("rn").value.trim();
+r.r=document.getElementById("rr").value;
+r.mg=document.getElementById("rm").value.trim();
+r.tl=document.getElementById("rtl").value.trim();
+// Update coaching log if name changed
+if(oldName!==r.n){CL.forEach(function(c){if(c.rep===oldName)c.rep=r.n})}
+try{localStorage.setItem("mv_reps",JSON.stringify(R))}catch(x){}
+clSave();clMo();render()}
+function loadReps(){try{var a=localStorage.getItem("mv_reps");if(a){var saved=JSON.parse(a);saved.forEach(function(s){var r=R.find(function(x){return x.id===s.id});if(r){r.n=s.n;r.r=s.r;r.mg=s.mg;r.tl=s.tl}})}}catch(x){}}
+
+// ===== MAIN RENDER =====
+function render(){rTabs();var m=document.getElementById("main");
+var q=document.getElementById("search").value.trim().toLowerCase();
+if(q.length>=2){
+var matches=R.filter(function(r){
+var nameMatch=r.n.toLowerCase().indexOf(q)>=0;
+var mgrMatch=(r.mg||"").toLowerCase().indexOf(q)>=0;
+var roleMatch=r.r.toLowerCase().indexOf(q)>=0;
+return nameMatch||mgrMatch||roleMatch;
+});
+if(matches.length>0&&matches.length<=12){
+var searchType="profiles for";
+if(matches.every(function(r){return r.n.toLowerCase().indexOf(q)<0}))searchType="reps matching";
+var h='<div style="font-size:13px;color:#6b7a88;margin-bottom:16px">Showing '+matches.length+' result'+(matches.length>1?"s":"")+' for "'+q+'" <span style="cursor:pointer;color:#1a6b54;font-weight:600;margin-left:8px" onclick="document.getElementById(\'search\').value=\'\';render()">✕ Clear search</span></div>';
+matches.forEach(function(r){h+=rProfile(r)});
+m.innerHTML=h;return;
+}
+if(matches.length===0){
+m.innerHTML='<div class="emp">No reps found matching "'+q+'". <span style="cursor:pointer;color:#1a6b54;font-weight:600" onclick="document.getElementById(\'search\').value=\'\';render()">✕ Clear</span></div>';
+return;
+}
+}
+if(T==="Overview")m.innerHTML=rOverview();
+else if(T==="Call Coaching")m.innerHTML=rCoach();
+else if(T==="Skills & Gaps")m.innerHTML=rSkills();
+else if(T==="Trends")m.innerHTML=rTrends();
+else if(T==="Objections")m.innerHTML=rObj();
+else if(T==="Pricing")m.innerHTML=rPrice();
+else if(T==="Activity")m.innerHTML=rAct();
+else if(T==="Coaching Plans")m.innerHTML=rPlans();
+else if(T==="1:1 Log")m.innerHTML=rLog();
+else if(T==="Rep Roster")m.innerHTML=rRoster()}
+
+// SEARCH - wire up input event
+var searchEl=document.getElementById("search");
+searchEl.addEventListener("input",function(){render()});
+searchEl.addEventListener("keyup",function(){render()});
+
+// Load local first for instant display, then sync from cloud
+clLoad();loadReps();render();
+// Then load from cloud and refresh
+clLoadCloud(function(){render()});
+</script>
+</body>
+</html>
