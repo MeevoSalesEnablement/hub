@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meevo Sales Enablement Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#dde2e8;
+  --card:#ffffff;
+  --text:#1e2b35;
+  --muted:#5a6b7a;
+  --green:#1a6b54;
+  --green-dk:#134d3d;
+  --green-lt:#e6f1ed;
+  --border:#c9d1dc;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;display:flex;flex-direction:column}
+
+.hub-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:14px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-shrink:0;
+  box-shadow:0 1px 2px rgba(0,0,0,0.03);
+}
+.hub-title{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.hub-title h1{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:20px;
+  letter-spacing:-0.01em;
+  color:var(--text);
+}
+.hub-title .sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:2px;
+}
+.logo-dot{
+  width:36px;height:36px;
+  border-radius:10px;
+  background:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:18px;
+  box-shadow:0 2px 4px rgba(26,107,84,0.25);
+}
+
+.hub-nav{
+  background:var(--card);
+  padding:10px 24px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  gap:6px;
+  flex-shrink:0;
+}
+.nav-btn{
+  padding:9px 18px;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  font-family:inherit;
+  font-size:13px;
+  font-weight:600;
+  border-radius:8px;
+  cursor:pointer;
+  transition:all 0.15s;
+  letter-spacing:0.01em;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.nav-btn:hover{
+  background:#f4f7fa;
+  color:var(--text);
+}
+.nav-btn.active{
+  background:var(--green);
+  color:white;
+  box-shadow:0 1px 3px rgba(26,107,84,0.25);
+}
+.nav-btn .ico{
+  font-size:15px;
+  line-height:1;
+}
+
+.iframe-wrap{
+  flex:1;
+  position:relative;
+  background:var(--bg);
+  overflow:hidden;
+}
+.iframe-wrap iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  background:var(--bg);
+}
+.iframe-wrap iframe.hidden{
+  display:none;
+}
+
+.loading-overlay{
+  position:absolute;
+  inset:0;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:14px;
+  color:var(--muted);
+  font-size:14px;
+  z-index:10;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.2s;
+}
+.loading-overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+.spinner{
+  width:32px;
+  height:32px;
+  border:3px solid rgba(26,107,84,0.15);
+  border-top-color:var(--green);
+  border-radius:50%;
+  animation:spin 0.7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.env-badge{
+  padding:3px 10px;
+  border-radius:20px;
+  background:var(--green-lt);
+  color:var(--green-dk);
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+}
+
+@media(max-width:768px){
+  .hub-header{padding:10px 14px}
+  .hub-title h1{font-size:16px}
+  .hub-title .sub{display:none}
+  .hub-nav{padding:8px 12px;overflow-x:auto;flex-wrap:nowrap}
+  .nav-btn{flex-shrink:0;padding:8px 12px;font-size:12px}
+  .env-badge{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="hub-header">
+  <div class="hub-title">
+    <div class="logo-dot">M</div>
+    <div>
+      <h1>Meevo Sales Enablement Hub</h1>
+      <div class="sub">Coaching · Onboarding · Call Feedback</div>
+    </div>
+  </div>
+  <div class="env-badge">Live</div>
+</div>
+
+<div class="hub-nav" role="tablist">
+  <button class="nav-btn active" data-view="coaching" role="tab">
+    <span class="ico">◆</span> Coaching
+  </button>
+  <button class="nav-btn" data-view="onboarding" role="tab">
+    <span class="ico">●</span> Onboarding
+  </button>
+  <button class="nav-btn" data-view="feedback" role="tab">
+    <span class="ico">★</span> Call Feedback
+  </button>
+</div>
+
+<div class="iframe-wrap">
+  <div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
+    <div id="loading-text">Loading…</div>
+  </div>
+  <iframe id="frame-coaching"   src="coaching.html"   title="Coaching Dashboard"></iframe>
+  <iframe id="frame-onboarding" src="onboarding.html" title="Onboarding Dashboard" class="hidden"></iframe>
+  <iframe id="frame-feedback"   src="feedback.html"   title="Call Feedback Dashboard" class="hidden"></iframe>
+</div>
+
+<script>
+(function(){
+  var buttons = document.querySelectorAll('.nav-btn');
+  var frames = {
+    coaching:   document.getElementById('frame-coaching'),
+    onboarding: document.getElementById('frame-onboarding'),
+    feedback:   document.getElementById('frame-feedback')
+  };
+  var labels = {
+    coaching:   'Loading Coaching dashboard…',
+    onboarding: 'Loading Onboarding dashboard…',
+    feedback:   'Loading Call Feedback dashboard…'
+  };
+  var loaded = { coaching: false, onboarding: false, feedback: false };
+  var loading = document.getElementById('loading');
+  var loadingText = document.getElementById('loading-text');
+
+  // Track iframe load events so the spinner hides at the right time
+  Object.keys(frames).forEach(function(key){
+    frames[key].addEventListener('load', function(){
+      loaded[key] = true;
+      if (currentView === key) loading.classList.remove('show');
+    });
+  });
+
+  var currentView = 'coaching';
+  // Initial load: coaching is visible, show spinner until its iframe loads
+  if (!loaded.coaching) {
+    loadingText.textContent = labels.coaching;
+    loading.classList.add('show');
+  }
+
+  function switchTo(view){
+    if (!frames[view]) return;
+
+    // Update active button
+    buttons.forEach(function(b){
+      b.classList.toggle('active', b.dataset.view === view);
+    });
+
+    // Hide all iframes, show target
+    Object.keys(frames).forEach(function(k){
+      frames[k].classList.toggle('hidden', k !== view);
+    });
+
+    currentView = view;
+
+    // Show spinner if the target hasn't loaded yet
+    if (!loaded[view]) {
+      loadingText.textContent = labels[view];
+      loading.classList.add('show');
+    } else {
+      loading.classList.remove('show');
+    }
+
+    // Update URL hash so deep links work
+    // (wrapped in try/catch for sandboxed iframe previews where replaceState is blocked)
+    try {
+      if (history.replaceState) {
+        history.replaceState(null, '', '#' + view);
+      }
+    } catch (_) { /* sandboxed context — hash links won't work here but that's fine */ }
+  }
+
+  // Wire up nav
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      switchTo(btn.dataset.view);
+    });
+  });
+
+  // Deep link support: #coaching, #onboarding, #feedback
+  function fromHash(){
+    var h = (location.hash || '').replace('#','');
+    if (frames[h]) switchTo(h);
+  }
+  window.addEventListener('hashchange', fromHash);
+  if (location.hash) fromHash();
+
+  // Keyboard shortcuts: Alt+1/2/3
+  document.addEventListener('keydown', function(e){
+    if (!e.altKey) return;
+    if (e.key === '1') switchTo('coaching');
+    if (e.key === '2') switchTo('onboarding');
+    if (e.key === '3') switchTo('feedback');
+  });
+})();
+</script>
+</body>
+</html>
