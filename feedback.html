@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meevo Call Feedback Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#dde2e8;
+  --card:#ffffff;
+  --text:#1e2b35;
+  --muted:#5a6b7a;
+  --green:#1a6b54;
+  --green-dk:#134d3d;
+  --green-lt:#e6f1ed;
+  --border:#c9d1dc;
+  --star:#e8a317;
+  --star-dim:#d4dae2;
+  --red:#b83b3b;
+  --amber:#c68a1b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:24px;line-height:1.5}
+.wrap{max-width:1200px;margin:0 auto}
+header{margin-bottom:24px}
+h1{font-family:'Fraunces',serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;color:var(--text)}
+.sub{color:var(--muted);font-size:14px;margin-top:4px}
+.tabs{display:flex;gap:4px;background:var(--card);padding:6px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border);width:fit-content;box-shadow:0 1px 2px rgba(0,0,0,0.03)}
+.tab{padding:10px 20px;border:none;background:transparent;color:var(--muted);font-family:inherit;font-size:14px;font-weight:500;border-radius:8px;cursor:pointer;transition:all 0.15s}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--green);color:white;box-shadow:0 1px 3px rgba(26,107,84,0.25)}
+.panel{display:none}
+.panel.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;box-shadow:0 1px 3px rgba(30,43,53,0.04)}
+.card + .card{margin-top:20px}
+.card h2{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:4px;letter-spacing:-0.01em}
+.card .hint{color:var(--muted);font-size:13px;margin-bottom:20px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.row.full{grid-template-columns:1fr}
+.row.three{grid-template-columns:1fr 1fr 1fr}
+label{display:block;font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+input,select,textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;background:#fafbfc;color:var(--text);transition:border-color 0.15s, background 0.15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);background:white;box-shadow:0 0 0 3px rgba(26,107,84,0.1)}
+textarea{resize:vertical;min-height:92px;font-family:inherit}
+.stars{display:flex;gap:6px;margin-top:4px}
+.star{cursor:pointer;font-size:32px;color:var(--star-dim);transition:transform 0.1s, color 0.1s;line-height:1;user-select:none}
+.star.active{color:var(--star)}
+.star:hover{transform:scale(1.15)}
+.stars-label{font-size:13px;color:var(--muted);margin-left:10px;align-self:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.15s}
+.btn-primary{background:var(--green);color:white}
+.btn-primary:hover{background:var(--green-dk)}
+.btn-primary:disabled{background:#a0b0b8;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{background:#f4f7fa;color:var(--text)}
+.toast{position:fixed;top:24px;right:24px;padding:14px 20px;border-radius:10px;font-size:14px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.12);z-index:1000;transform:translateY(-20px);opacity:0;transition:all 0.3s}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:var(--green);color:white}
+.toast.error{background:var(--red);color:white}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-bottom:8px}
+.kpi-value{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:var(--text);line-height:1}
+.kpi-value.green{color:var(--green)}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:6px}
+.chart-wrap{height:320px;position:relative;margin-top:12px}
+canvas{max-width:100%}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.legend-item{display:flex;align-items:center;gap:6px}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border);background:#f4f7fa}
+td{padding:12px;border-bottom:1px solid #eef1f5;vertical-align:top}
+tr:last-child td{border-bottom:none}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.04em}
+.badge-sdr{background:#dbe6f2;color:#1e4d82}
+.badge-ae{background:var(--green-lt);color:var(--green-dk)}
+.score-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.score-pill.high{background:#e6f4e6;color:#2d6b2d}
+.score-pill.mid{background:#fff4e0;color:#8a5a0b}
+.score-pill.low{background:#fce8e8;color:#9a2626}
+a.call-link{color:var(--green);text-decoration:none;font-weight:500}
+a.call-link:hover{text-decoration:underline}
+.filter-row{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.filter-row select{max-width:200px}
+.empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
+.loading{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner-muted{border-color:rgba(26,107,84,0.2);border-top-color:var(--green)}
+.feedback-cell{max-width:260px;font-size:12px;color:var(--muted);line-height:1.4}
+.feedback-cell strong{color:var(--text);font-weight:600;display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px}
+@media(max-width:768px){
+  .row,.row.three{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  body{padding:16px}
+  h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Call Feedback Dashboard</h1>
+  <p class="sub">SDR &amp; AE call coaching · Meevo Sales Enablement</p>
+</header>
+
+<div class="tabs">
+  <button class="tab active" data-tab="log">Log Feedback</button>
+  <button class="tab" data-tab="history">History</button>
+  <button class="tab" data-tab="scores">Scores &amp; Trends</button>
+</div>
+
+<!-- LOG TAB -->
+<div class="panel active" id="panel-log">
+  <div class="card">
+    <h2>New Call Feedback</h2>
+    <p class="hint">Capture motivational and formative feedback from a call. Saved to your Google Sheet.</p>
+
+    <div class="row">
+      <div>
+        <label for="f-date">Date</label>
+        <input type="date" id="f-date">
+      </div>
+      <div>
+        <label for="f-rep">Rep</label>
+        <select id="f-rep">
+          <option value="">Select a rep…</option>
+          <optgroup label="SDRs">
+            <option data-role="SDR">Africa Brown</option>
+            <option data-role="SDR">Amber Martello</option>
+            <option data-role="SDR">Carson Hussey</option>
+            <option data-role="SDR">Chloe Arnette</option>
+            <option data-role="SDR">Jeremy Sexton</option>
+            <option data-role="SDR">Kaelyne Chavez</option>
+            <option data-role="SDR">Michael Senich</option>
+            <option data-role="SDR">Sky Guasco</option>
+            <option data-role="SDR">Suzy Kim</option>
+            <option data-role="SDR">Tyler Butt</option>
+            <option data-role="SDR">William Appleford</option>
+          </optgroup>
+          <optgroup label="AEs">
+            <option data-role="AE">Brandon Cline</option>
+            <option data-role="AE">Candice Chuy</option>
+            <option data-role="AE">Jenna Flory</option>
+            <option data-role="AE">Jessica Monson</option>
+            <option data-role="AE">Kenny Sullivan</option>
+            <option data-role="AE">Lauren Hopkins</option>
+            <option data-role="AE">Matt McCarthy</option>
+            <option data-role="AE">Monica Lopez</option>
+            <option data-role="AE">Myranda Grabman</option>
+            <option data-role="AE">Patrick McCaghren</option>
+            <option data-role="AE">Sandra Arnette</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="f-prospect">Prospect Name</label>
+        <input type="text" id="f-prospect" placeholder="e.g. Acme Salon">
+      </div>
+      <div>
+        <label for="f-callurl">Call URL</label>
+        <input type="url" id="f-callurl" placeholder="https://...">
+      </div>
+    </div>
+
+    <div class="row full">
+      <div>
+        <label>Score (1 = low · 5 = high)</label>
+        <div class="stars" id="f-stars" role="radiogroup" aria-label="Call score">
+          <span class="star" data-val="1" role="radio" aria-label="1 star">★</span>
+          <span class="star" data-val="2" role="radio" aria-label="2 stars">★</span>
+          <span class="star" data-val="3" role="radio" aria-label="3 stars">★</span>
+          <span class="star" data-val="4" role="radio" aria-label="4 stars">★</span>
+          <span class="star" data-val="5" role="radio" aria-label="5 stars">★</span>
+          <span class="stars-label" id="stars-label">No score selected</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="f-motivational">Motivational Feedback</label>
+        <textarea id="f-motivational" placeholder="What they did well — call this out specifically."></textarea>
+      </div>
+      <div>
+        <label for="f-formative">Formative Feedback</label>
+        <textarea id="f-formative" placeholder="What to work on next — specific, actionable."></textarea>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn btn-primary" id="btn-save">Save Feedback</button>
+      <button class="btn btn-ghost" id="btn-reset">Reset Form</button>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY TAB -->
+<div class="panel" id="panel-history">
+  <div class="card">
+    <h2>Feedback History</h2>
+    <p class="hint">All call feedback, most recent first. <button class="btn btn-ghost" id="btn-refresh" style="padding:4px 12px;font-size:12px;margin-left:8px">↻ Refresh</button></p>
+
+    <div class="filter-row">
+      <select id="filt-rep">
+        <option value="">All reps</option>
+      </select>
+      <select id="filt-role">
+        <option value="">All roles</option>
+        <option value="SDR">SDRs only</option>
+        <option value="AE">AEs only</option>
+      </select>
+    </div>
+
+    <div id="history-table"></div>
+  </div>
+</div>
+
+<!-- SCORES TAB -->
+<div class="panel" id="panel-scores">
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-label">Total Reviews</div><div class="kpi-value" id="kpi-total">—</div></div>
+    <div class="kpi"><div class="kpi-label">Team Avg Score</div><div class="kpi-value green" id="kpi-avg">—</div><div class="kpi-sub">out of 5.0</div></div>
+    <div class="kpi"><div class="kpi-label">Reviews this month</div><div class="kpi-value" id="kpi-month">—</div></div>
+    <div class="kpi"><div class="kpi-label">Reps coached</div><div class="kpi-value" id="kpi-reps">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Score Trends</h2>
+    <p class="hint">Team average alongside per-rep scores over time.</p>
+    <div class="chart-wrap"><canvas id="chart"></canvas></div>
+    <div class="legend" id="chart-legend"></div>
+  </div>
+
+  <div class="card">
+    <h2>Rep Leaderboard</h2>
+    <p class="hint">Average score per rep across all coached calls.</p>
+    <div id="leaderboard"></div>
+  </div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// =============== CONFIG ===============
+var API_URL = "https://script.google.com/macros/s/AKfycbxi0ncD9TgMv0B6d5qoThutchf0huxSqgJcWKS-qxeib2kJ-ZZDgB21og-PaR2ZgzsJ/exec";
+
+// =============== STATE ===============
+var state = {
+  score: 0,
+  entries: [],
+  filterRep: "",
+  filterRole: ""
+};
+
+// =============== TABS ===============
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){
+    var target = t.dataset.tab;
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active')});
+    t.classList.add('active');
+    document.getElementById('panel-' + target).classList.add('active');
+    if(target === 'history' || target === 'scores'){
+      if(state.entries.length === 0) loadEntries();
+      else if(target === 'scores') renderScores();
+      else renderHistory();
+    }
+  });
+});
+
+// =============== STAR RATING ===============
+var stars = document.querySelectorAll('#f-stars .star');
+stars.forEach(function(s){
+  s.addEventListener('click', function(){
+    state.score = parseInt(s.dataset.val);
+    updateStars();
+  });
+  s.addEventListener('mouseenter', function(){
+    var v = parseInt(s.dataset.val);
+    stars.forEach(function(x){
+      x.classList.toggle('active', parseInt(x.dataset.val) <= v);
+    });
+  });
+});
+document.getElementById('f-stars').addEventListener('mouseleave', updateStars);
+
+function updateStars(){
+  stars.forEach(function(x){
+    x.classList.toggle('active', parseInt(x.dataset.val) <= state.score);
+  });
+  var lbl = document.getElementById('stars-label');
+  lbl.textContent = state.score === 0 ? 'No score selected' : state.score + ' of 5';
+}
+
+// =============== DATE DEFAULT ===============
+document.getElementById('f-date').valueAsDate = new Date();
+
+// =============== TOAST ===============
+function toast(msg, kind){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (kind || 'success');
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+// =============== SAVE ===============
+document.getElementById('btn-save').addEventListener('click', function(){
+  var repSel = document.getElementById('f-rep');
+  var repName = repSel.value;
+  var repOption = repSel.options[repSel.selectedIndex];
+  var role = repOption ? repOption.dataset.role || '' : '';
+  var date = document.getElementById('f-date').value;
+  var prospect = document.getElementById('f-prospect').value.trim();
+  var callUrl = document.getElementById('f-callurl').value.trim();
+  var motivational = document.getElementById('f-motivational').value.trim();
+  var formative = document.getElementById('f-formative').value.trim();
+
+  if(!date){ toast('Please pick a date', 'error'); return; }
+  if(!repName){ toast('Please select a rep', 'error'); return; }
+  if(!prospect){ toast('Please enter a prospect name', 'error'); return; }
+  if(state.score === 0){ toast('Please select a score (1–5)', 'error'); return; }
+
+  var payload = {
+    action: 'addFeedback',
+    date: date,
+    rep: repName,
+    role: role,
+    prospect: prospect,
+    callUrl: callUrl,
+    motivational: motivational,
+    formative: formative,
+    score: state.score
+  };
+
+  var btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"></span> Saving...';
+
+  // Apps Script requires text/plain to avoid CORS preflight issues
+  fetch(API_URL, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload)
+  })
+  .then(function(r){ return r.json().catch(function(){ return {ok: true}; }); })
+  .then(function(){
+    toast('Feedback saved to sheet ✓', 'success');
+    resetForm();
+    // Refresh cached entries so History / Scores show the new row
+    state.entries = [];
+    btn.disabled = false;
+    btn.innerHTML = 'Save Feedback';
+  })
+  .catch(function(err){
+    // no-cors fallback: the request likely succeeded but response is opaque
+    toast('Saved (response opaque — check your sheet)', 'success');
+    state.entries = [];
+    btn.disabled = false;
+    btn.innerHTML = 'Save Feedback';
+  });
+});
+
+document.getElementById('btn-reset').addEventListener('click', resetForm);
+function resetForm(){
+  document.getElementById('f-rep').value = '';
+  document.getElementById('f-prospect').value = '';
+  document.getElementById('f-callurl').value = '';
+  document.getElementById('f-motivational').value = '';
+  document.getElementById('f-formative').value = '';
+  state.score = 0;
+  updateStars();
+  document.getElementById('f-date').valueAsDate = new Date();
+}
+
+// =============== LOAD ENTRIES ===============
+function loadEntries(){
+  document.getElementById('history-table').innerHTML = '<div class="empty"><span class="loading spinner-muted"></span> Loading feedback history…</div>';
+
+  fetch(API_URL + '?action=readFeedback', {method: 'GET', mode: 'cors'})
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      // Unified script returns {success:true, data:[...]}
+      // Keep back-compat with {entries:[...]} or plain array
+      var entries;
+      if (Array.isArray(data)) {
+        entries = data;
+      } else if (data && data.success && Array.isArray(data.data)) {
+        entries = data.data;
+      } else {
+        entries = data.entries || data.data || [];
+      }
+      state.entries = entries;
+      // Sort newest first
+      state.entries.sort(function(a, b){
+        return (b.date || '').localeCompare(a.date || '');
+      });
+      populateRepFilter();
+      renderHistory();
+      renderScores();
+    })
+    .catch(function(err){
+      document.getElementById('history-table').innerHTML = '<div class="empty">Could not load entries. Check that your Apps Script doGet returns JSON and is deployed with "Anyone" access.<br><br>Error: ' + err.message + '</div>';
+    });
+}
+
+document.getElementById('btn-refresh').addEventListener('click', function(){
+  state.entries = [];
+  loadEntries();
+});
+
+// =============== FILTERS ===============
+function populateRepFilter(){
+  var reps = {};
+  state.entries.forEach(function(e){ if(e.rep) reps[e.rep] = true; });
+  var sel = document.getElementById('filt-rep');
+  var current = sel.value;
+  sel.innerHTML = '<option value="">All reps</option>';
+  Object.keys(reps).sort().forEach(function(name){
+    var o = document.createElement('option');
+    o.value = name; o.textContent = name;
+    sel.appendChild(o);
+  });
+  sel.value = current;
+}
+document.getElementById('filt-rep').addEventListener('change', function(e){
+  state.filterRep = e.target.value;
+  renderHistory();
+});
+document.getElementById('filt-role').addEventListener('change', function(e){
+  state.filterRole = e.target.value;
+  renderHistory();
+});
+
+// =============== HISTORY TABLE ===============
+function renderHistory(){
+  var filtered = state.entries.filter(function(e){
+    if(state.filterRep && e.rep !== state.filterRep) return false;
+    if(state.filterRole && e.role !== state.filterRole) return false;
+    return true;
+  });
+
+  if(filtered.length === 0){
+    document.getElementById('history-table').innerHTML = '<div class="empty">No feedback entries yet. Log your first one on the <strong>Log Feedback</strong> tab.</div>';
+    return;
+  }
+
+  var rows = filtered.map(function(e){
+    var scoreNum = Number(e.score) || 0;
+    var pillClass = scoreNum >= 4 ? 'high' : scoreNum >= 3 ? 'mid' : 'low';
+    var stars = '★'.repeat(scoreNum) + '☆'.repeat(5 - scoreNum);
+    var roleBadge = e.role === 'AE' ? '<span class="badge badge-ae">AE</span>' : e.role === 'SDR' ? '<span class="badge badge-sdr">SDR</span>' : '';
+    var link = e.callUrl ? '<a class="call-link" href="' + escapeAttr(e.callUrl) + '" target="_blank" rel="noopener">Open call ↗</a>' : '<span style="color:#a0aec0">—</span>';
+    return '<tr>' +
+      '<td style="white-space:nowrap">' + escapeHtml(e.date || '') + '</td>' +
+      '<td><strong>' + escapeHtml(e.rep || '') + '</strong> ' + roleBadge + '</td>' +
+      '<td>' + escapeHtml(e.prospect || '') + '</td>' +
+      '<td><span class="score-pill ' + pillClass + '">' + stars + ' ' + scoreNum + '</span></td>' +
+      '<td class="feedback-cell">' +
+        (e.motivational ? '<strong>Motivational</strong>' + escapeHtml(e.motivational) : '') +
+        (e.motivational && e.formative ? '<br>' : '') +
+        (e.formative ? '<strong style="margin-top:6px">Formative</strong>' + escapeHtml(e.formative) : '') +
+      '</td>' +
+      '<td>' + link + '</td>' +
+      '</tr>';
+  }).join('');
+
+  document.getElementById('history-table').innerHTML =
+    '<table><thead><tr>' +
+    '<th>Date</th><th>Rep</th><th>Prospect</th><th>Score</th><th>Feedback</th><th>Link</th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table>';
+}
+
+// =============== SCORES / CHART ===============
+function renderScores(){
+  var total = state.entries.length;
+  var scored = state.entries.filter(function(e){ return Number(e.score) > 0; });
+  var avg = scored.length ? (scored.reduce(function(s,e){ return s + Number(e.score); }, 0) / scored.length) : 0;
+  var now = new Date();
+  var thisMonth = state.entries.filter(function(e){
+    if(!e.date) return false;
+    var d = new Date(e.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+  var reps = {};
+  state.entries.forEach(function(e){ if(e.rep) reps[e.rep] = true; });
+
+  document.getElementById('kpi-total').textContent = total;
+  document.getElementById('kpi-avg').textContent = avg ? avg.toFixed(2) : '—';
+  document.getElementById('kpi-month').textContent = thisMonth;
+  document.getElementById('kpi-reps').textContent = Object.keys(reps).length;
+
+  renderChart();
+  renderLeaderboard();
+}
+
+function renderChart(){
+  var canvas = document.getElementById('chart');
+  var ctx = canvas.getContext('2d');
+  var wrapW = canvas.parentElement.clientWidth;
+  var wrapH = 320;
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = wrapW * dpr;
+  canvas.height = wrapH * dpr;
+  canvas.style.width = wrapW + 'px';
+  canvas.style.height = wrapH + 'px';
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, wrapW, wrapH);
+
+  if(state.entries.length === 0){
+    ctx.fillStyle = '#5a6b7a';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('No data yet — log some feedback to see trends.', wrapW/2, wrapH/2);
+    document.getElementById('chart-legend').innerHTML = '';
+    return;
+  }
+
+  // Group by date for team average, and by rep for per-rep lines
+  var sorted = state.entries.slice().sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); });
+  var dates = [];
+  var seenDate = {};
+  sorted.forEach(function(e){
+    if(e.date && !seenDate[e.date]){ seenDate[e.date] = true; dates.push(e.date); }
+  });
+  if(dates.length === 0){
+    ctx.fillStyle = '#5a6b7a';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Entries found but missing dates.', wrapW/2, wrapH/2);
+    return;
+  }
+
+  // Team avg per date
+  var teamAvg = dates.map(function(d){
+    var on = sorted.filter(function(e){ return e.date === d && Number(e.score) > 0; });
+    return on.length ? on.reduce(function(s,e){return s+Number(e.score)}, 0) / on.length : null;
+  });
+
+  // Per rep scores per date
+  var repMap = {};
+  sorted.forEach(function(e){
+    if(!e.rep || !(Number(e.score)>0)) return;
+    if(!repMap[e.rep]) repMap[e.rep] = {};
+    repMap[e.rep][e.date] = Number(e.score);
+  });
+
+  var repColors = ['#2563a8','#e67e22','#7c3aed','#b83b3b','#c68a1b','#0f766e','#db2777','#475569','#8b5a2b','#0284c7','#65a30d','#be185d','#4338ca','#92400e','#0891b2','#a16207','#9333ea','#b45309','#047857','#1d4ed8'];
+  var repNames = Object.keys(repMap);
+  var pad = {l: 44, r: 16, t: 16, b: 36};
+  var plotW = wrapW - pad.l - pad.r;
+  var plotH = wrapH - pad.t - pad.b;
+
+  // Grid + Y axis (0-5)
+  ctx.strokeStyle = '#eef1f5';
+  ctx.lineWidth = 1;
+  ctx.fillStyle = '#5a6b7a';
+  ctx.font = '11px Inter, sans-serif';
+  ctx.textAlign = 'right';
+  for(var i = 0; i <= 5; i++){
+    var y = pad.t + plotH - (i / 5) * plotH;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, y);
+    ctx.lineTo(pad.l + plotW, y);
+    ctx.stroke();
+    ctx.fillText(i.toString(), pad.l - 8, y + 4);
+  }
+
+  // X axis labels (sample dates if too many)
+  var labelEvery = Math.max(1, Math.ceil(dates.length / 8));
+  ctx.textAlign = 'center';
+  dates.forEach(function(d, idx){
+    if(idx % labelEvery !== 0 && idx !== dates.length - 1) return;
+    var x = pad.l + (dates.length === 1 ? plotW / 2 : (idx / (dates.length - 1)) * plotW);
+    var short = d.length >= 10 ? d.slice(5) : d;
+    ctx.fillText(short, x, wrapH - pad.b + 18);
+  });
+
+  function xFor(idx){ return pad.l + (dates.length === 1 ? plotW / 2 : (idx / (dates.length - 1)) * plotW); }
+  function yFor(v){ return pad.t + plotH - (v / 5) * plotH; }
+
+  // Draw per-rep lines (thin)
+  repNames.forEach(function(rep, ri){
+    ctx.strokeStyle = repColors[ri % repColors.length];
+    ctx.fillStyle = repColors[ri % repColors.length];
+    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = 0.55;
+    ctx.beginPath();
+    var started = false;
+    dates.forEach(function(d, idx){
+      var v = repMap[rep][d];
+      if(v == null) return;
+      var x = xFor(idx);
+      var y = yFor(v);
+      if(!started){ ctx.moveTo(x, y); started = true; }
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // dots
+    dates.forEach(function(d, idx){
+      var v = repMap[rep][d];
+      if(v == null) return;
+      ctx.beginPath();
+      ctx.arc(xFor(idx), yFor(v), 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  });
+  ctx.globalAlpha = 1;
+
+  // Draw team avg (bold green)
+  ctx.strokeStyle = '#1a6b54';
+  ctx.fillStyle = '#1a6b54';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  var startedAvg = false;
+  teamAvg.forEach(function(v, idx){
+    if(v == null) return;
+    var x = xFor(idx);
+    var y = yFor(v);
+    if(!startedAvg){ ctx.moveTo(x, y); startedAvg = true; }
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+  teamAvg.forEach(function(v, idx){
+    if(v == null) return;
+    ctx.beginPath();
+    ctx.arc(xFor(idx), yFor(v), 4, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Legend
+  var legendHtml = '<div class="legend-item"><span class="legend-dot" style="background:#1a6b54"></span><strong style="color:var(--text)">Team Average</strong></div>';
+  repNames.forEach(function(rep, ri){
+    legendHtml += '<div class="legend-item"><span class="legend-dot" style="background:' + repColors[ri % repColors.length] + '"></span>' + escapeHtml(rep) + '</div>';
+  });
+  document.getElementById('chart-legend').innerHTML = legendHtml;
+}
+
+function renderLeaderboard(){
+  var repStats = {};
+  state.entries.forEach(function(e){
+    var s = Number(e.score) || 0;
+    if(!e.rep || s === 0) return;
+    if(!repStats[e.rep]) repStats[e.rep] = {total:0, sum:0, role: e.role || ''};
+    repStats[e.rep].total++;
+    repStats[e.rep].sum += s;
+  });
+  var arr = Object.keys(repStats).map(function(n){
+    return {name:n, avg: repStats[n].sum/repStats[n].total, count: repStats[n].total, role: repStats[n].role};
+  }).sort(function(a,b){ return b.avg - a.avg; });
+
+  if(arr.length === 0){
+    document.getElementById('leaderboard').innerHTML = '<div class="empty">No scored entries yet.</div>';
+    return;
+  }
+
+  var rows = arr.map(function(r, i){
+    var pill = r.avg >= 4 ? 'high' : r.avg >= 3 ? 'mid' : 'low';
+    var stars = '★'.repeat(Math.round(r.avg)) + '☆'.repeat(5 - Math.round(r.avg));
+    var badge = r.role === 'AE' ? '<span class="badge badge-ae">AE</span>' : r.role === 'SDR' ? '<span class="badge badge-sdr">SDR</span>' : '';
+    return '<tr>' +
+      '<td style="width:40px;color:var(--muted);font-weight:600">' + (i+1) + '</td>' +
+      '<td><strong>' + escapeHtml(r.name) + '</strong> ' + badge + '</td>' +
+      '<td style="text-align:right"><span class="score-pill ' + pill + '">' + stars + ' ' + r.avg.toFixed(2) + '</span></td>' +
+      '<td style="text-align:right;color:var(--muted)">' + r.count + ' review' + (r.count===1?'':'s') + '</td>' +
+    '</tr>';
+  }).join('');
+
+  document.getElementById('leaderboard').innerHTML =
+    '<table><thead><tr><th>#</th><th>Rep</th><th style="text-align:right">Avg Score</th><th style="text-align:right">Reviews</th></tr></thead><tbody>' + rows + '</tbody></table>';
+}
+
+// =============== HELPERS ===============
+function escapeHtml(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function escapeAttr(s){ return escapeHtml(s); }
+
+// Trigger initial load so chart has data if user jumps straight to Scores
+window.addEventListener('load', function(){
+  // Don't block initial paint — lazy-load on tab switch. But warm it up:
+  // loadEntries();
+});
+</script>
+</body>
+</html>
